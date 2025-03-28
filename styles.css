@@ -1,0 +1,345 @@
+/* General Styles */
+:root {
+  --primary-color: #007bff; /* Example:  Blue */
+  --secondary-color: #6c757d; /* Example:  Gray */
+  --background-color-light: #f8f9fa;
+  --text-color-light: #212529;
+  --background-color-dark: #121212; /* Dark background */
+  --text-color-dark: #f8f9fa; /* Light text on dark background */
+  --border-color: #ccc;
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Or your preferred font */
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--background-color-light);
+  color: var(--text-color-light);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+/* Container */
+.container {
+  width: 80%; /* Adjust as needed */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+header {
+  background-color: var(--primary-color); /* Adjust color */
+  color: white;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+header nav li {
+  margin-left: 1rem;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+header nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Lighten on hover */
+}
+
+header nav a.active {
+  font-weight: bold;
+  /*  Add a different highlight style */
+  border-bottom: 2px solid white;
+}
+
+/* Hero Section */
+#hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-image {
+  flex: 1;
+  text-align: center; /* Center the image */
+}
+
+.hero-image img {
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+  max-width: 100%;
+  height: auto;
+}
+
+/* Button Style */
+.button {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker on hover */
+}
+
+/* Featured Projects */
+#featured-projects {
+  margin-bottom: 3rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsive columns */
+  gap: 2rem;
+}
+
+.project-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden; /* Prevent image overflow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px); /* Subtle lift effect */
+}
+
+.project-card img {
+  width: 100%;
+  height: auto;
+  display: block; /* Remove any extra space under the image */
+}
+
+.project-card h3 {
+  padding: 1rem;
+  margin: 0;
+}
+
+.project-card p {
+  padding: 0 1rem 1rem;
+  margin: 0;
+}
+
+/* Latest Blog Posts */
+#latest-blog-posts {
+  margin-bottom: 3rem;
+}
+
+.blog-posts-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsive columns */
+  gap: 1rem;
+}
+
+.blog-post-preview {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.blog-post-preview:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styles */
+footer {
+  background-color: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 0.5rem; /* Add spacing between links */
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color-light);
+  transition: color 0.3s ease;
+}
+
+#theme-toggle:hover {
+  color: var(--primary-color);
+}
+
+/* Dark Mode Specific Styles (Overrides) */
+body.dark-mode header {
+  background-color: #333; /* Adjust header color */
+}
+
+body.dark-mode header a {
+  color: #ddd; /* Adjust link color */
+}
+
+body.dark-mode header a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode #theme-toggle {
+  color: var(--text-color-dark);
+}
+
+/* Responsive Design (Example) */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  #hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-image {
+    margin-top: 1rem;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  header nav li {
+    margin: 0.5rem 0;
+  }
+}
+#hero h2 {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Start slightly above */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at normal position */
+  }
+}
+.hero-shapes {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Center the shapes horizontally */
+  align-items: center; /* Center the shapes vertically */
+  height: 300px; /* Adjust height as needed */
+  background-color: var(--primary-color); /* Or a different color */
+  border-radius: 10px;
+  overflow: hidden; /* Important:  Prevent shapes from overflowing */
+}
+
+/* Example Shape Styles (You'll customize these) */
+.hero-shapes::before {
+  content: "";
+  position: absolute;
+  width: 80px; /* Adjust size */
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+  border-radius: 50%; /* Circle */
+  animation: float1 5s ease-in-out infinite;
+}
+
+.hero-shapes::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px; /* Rounded rectangle */
+  animation: float2 7s ease-in-out infinite;
+}
+
+/* Positioning the shapes */
+.hero-shapes::before {
+  top: 20px;
+  left: 20px;
+}
+
+.hero-shapes::after {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Animation for the shapes */
+@keyframes float1 {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-15px, 15px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
