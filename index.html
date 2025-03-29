@@ -9,10 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-G2L5p+28vH00K5G1Q06/O/fGq94rK6Y12kF5d2pUfJ+zX8S78B1/q4G3O/1C7z6L2tJ4V+V4uQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Prism CSS -->
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7hV3a8C+g8B4h5+r4wT0+eP5sS+m76uFk07/03+qL5iFvjS+89d0z5G2I/K8g6n94bYqS0j0W8yLdQc69g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> <!-- Prism JS -->
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
         <div class="container">
             <div class="header-content">
                 <h1>Oscar Z</h1>
-                <button id="theme-toggle">
+                <button id="theme-toggle" aria-label="Toggle Light/Dark Mode">
                     <img height="30vh"
                         src="https://static-00.iconduck.com/assets.00/mode-light-icon-2048x2048-no286vfd.png"
                         alt="Toggle theme">
@@ -54,13 +54,15 @@
             <div class="projects-grid">
                 <!-- Project Cards (Dynamically populate these from a JSON or data source) -->
                 <div class="project-card">
-                    <img src="project1-image.jpg" alt="Project 1">
+                    <img style="width: 10em;" src="https://cdn-icons-png.flaticon.com/512/5956/5956592.png"
+                        alt="Project 1">
                     <h3>Project Title 1</h3>
                     <p>A brief description of the project. Showcase your key technologies.</p>
                     <a href="#" class="button">View Details</a>
                 </div>
                 <div class="project-card">
-                    <img src="project2-image.jpg" alt="Project 2">
+                    <img style="width: 10em;" src="https://cdn-icons-png.flaticon.com/512/5956/5956592.png"
+                        alt="Project 2">
                     <h3>Project Title 2</h3>
                     <p>Another project description. Highlight its features.</p>
                     <a href="#" class="button">View Details</a>
@@ -71,17 +73,9 @@
 
         <section id="latest-blog-posts">
             <h2>Latest Blog Posts</h2>
-            <div class="blog-posts-list">
+            <div class="blog-grid">
                 <!-- Blog Post previews.  Populate these dynamically -->
-                <div class="blog-post-preview">
-                    <h3><a href="blog.html">Blog Post Title</a></h3>
-                    <p>Brief excerpt from the blog post. Include date. Add a link to 'Read More'</p>
-                </div>
-                <div class="blog-post-preview">
-                    <h3><a href="blog.html">Another Blog Post Title</a></h3>
-                    <p>Another excerpt. Showcase the variety of your content.</p>
-                </div>
-                <!-- Add more blog post previews -->
+                <!-- Blog Post Cards will go here -->
             </div>
         </section>
     </main>
@@ -123,21 +117,30 @@
             }
         });
 
-        // Example Blog Loading (Modify as needed for your blog.html)
+        // Modified blog loading to create cards
         document.addEventListener("DOMContentLoaded", () => {
-            if (window.location.pathname.includes("blog.html")) {
-                fetch("posts.json")
-                    .then(response => response.json())
-                    .then(posts => {
-                        let blogContainer = document.getElementById("content");
-                        blogContainer.innerHTML = "<h2>Blog</h2>";
-                        posts.forEach(post => {
-                            let postElement = document.createElement("div");
-                            postElement.innerHTML = `<h3><a href="post.html?file=${post.file}">${post.title}</a></h3><p>${post.date}</p>`;
-                            blogContainer.appendChild(postElement);
-                        });
+            fetch("posts.json")
+                .then(response => response.json())
+                .then(posts => {
+                    const blogContainer = document.querySelector(".blog-grid"); // Changed to class
+                    blogContainer.innerHTML = ""; // Clear existing content
+
+                    posts.forEach(post => {
+                        const postElement = document.createElement("div");
+                        postElement.classList.add("blog-card"); // Add the blog-card class
+                        postElement.innerHTML = `
+                    <a href="post.html?file=${post.file}">
+                        <div class="blog-card-content">
+                            <h3>${post.title}</h3>
+                            <p class="blog-date">${post.date}</p>
+                            <p class="blog-excerpt">${post.excerpt || 'Read more...'}</p>
+                            <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                `;
+                        blogContainer.appendChild(postElement);
                     });
-            }
+                });
         });
     </script>
 </body>
