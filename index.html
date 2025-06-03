@@ -2,147 +2,125 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar Z - Developer</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-        integrity="sha512-G2L5p+28vH00K5G1Q06/O/fGq94rK6Y12kF5d2pUfJ+zX8S78B1/q4G3O/1C7z6L2tJ4V+V4uQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
-        integrity="sha512-7hV3a8C+g8B4h5+r4wT0+eP5sS+m76uFk07/03+qL5iFvjS+89d0z5G2I/K8g6n94bYqS0j0W8yLdQc69g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Oscar Zhou | Home</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- This is just an icon kit provided by FontAwesome, nothing too fancy to see here :) -->
 </head>
 
 <body>
+    <div class="cursor-dot"></div> <!-- cursor stuff to make cool -->
+    <div class="cursor-outline"></div> <!-- the cursor outline to make it even cooler lol -->
+
     <header>
         <div class="container">
-            <div class="header-content">
-                <h1>Oscar Z</h1>
-                <button id="theme-toggle" aria-label="Toggle Light/Dark Mode">
-                    <img height="30vh"
-                        src="https://static-00.iconduck.com/assets.00/mode-light-icon-2048x2048-no286vfd.png"
-                        alt="Toggle theme">
-                </button>
+            <div class="hero-text">
+                <h1><span>O</span>scar <span>Z</span>hou</h1>
+                <p class="subtitle">Musician | Programmer</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
-    <main id="content" class="container">
-        <section id="hero">
-            <div class="hero-text">
-                <h2>Hi, I'm Oscar!</h2>
-                <p>A passionate developer crafting innovative solutions, specializing in AI and web technologies.</p>
-                <a href="projects.html" class="button">View My Projects</a>
-            </div>
-            <div class="hero-image">
-                <img src="https://cdn-icons-png.flaticon.com/512/8017/8017876.png" style="height: 40vh;" alt="">
+    <main>
+        <section id="hobbies" class="container content-section">
+            <h2><i class="fas fa-heart"></i> Passions & Hobbies</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <h3>Cello</h3>
+                    <p>I love playing the cello because of how close it sounds to the human voice. It is an incredibly
+                        expressive and versatile instrument.</p>
+                </div>
+                <div class="hobby-card">
+                    <h3>Piano</h3>
+                    <p>The piano is an absolutely amazing instrument. People often think it's just about pressing keys
+                        and that's it, but there are so many different types of sounds on the piano.</p>
+                </div>
+                <div class="hobby-card">
+                    <h3>Programming</h3>
+                    <p>Programming is my way of turning crazy ideas into things that work and building overengineered
+                        and unnecessarily complicated applications.</p>
+                </div>
             </div>
         </section>
-
-        <section id="featured-projects">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                <!-- Project Cards (Dynamically populate these from a JSON or data source) -->
-                <div class="project-card">
-                    <img style="width: 10em;" src="https://cdn-icons-png.flaticon.com/512/5956/5956592.png"
-                        alt="Project 1">
-                    <h3>Project Title 1</h3>
-                    <p>A brief description of the project. Showcase your key technologies.</p>
-                    <a href="#" class="button">View Details</a>
+        <section id="programming-languages" class="container content-section">
+            <h2><i class="fas fa-code"></i> Programming Languages that I work with</h2>
+            <div class="languages-grid">
+                <a href="https://www.python.org/">
+                    <div class="language-item">
+                        <div class="language-icon-container">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <span class="language-name">Python</span>
+                    </div>
+                </a>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <span class="language-name">JavaScript</span>
                 </div>
-                <div class="project-card">
-                    <img style="width: 10em;" src="https://cdn-icons-png.flaticon.com/512/5956/5956592.png"
-                        alt="Project 2">
-                    <h3>Project Title 2</h3>
-                    <p>Another project description. Highlight its features.</p>
-                    <a href="#" class="button">View Details</a>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <span class="language-name">Java</span>
                 </div>
-                <!-- Add more project cards as needed -->
-            </div>
-        </section>
-
-        <section id="latest-blog-posts">
-            <h2>Latest Blog Posts</h2>
-            <div class="blog-grid">
-                <!-- Blog Post previews.  Populate these dynamically -->
-                <!-- Blog Post Cards will go here -->
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <span class="language-name">HTML5</span>
+                </div>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <span class="language-name">CSS3</span>
+                </div>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i><img id="icon"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1820px-Logo_C_sharp.svg.png"
+                                alt="C++ icon"></i>
+                    </div>
+                    <span class="language-name">C#</span>
+                </div>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i><img id="icon"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png"
+                                alt="C++ icon"></i>
+                    </div>
+                    <span class="language-name">C++</span>
+                </div>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <span class="language-name">SQL</span>
+                </div>
+                <div class="language-item">
+                    <div class="language-icon-container">
+                        <i class="fab fa-swift"></i>
+                    </div>
+                    <span class="language-name">Swift</span>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2024 Oscar Z. <a href="mailto:your.email@example.com">Contact Me</a> | <a
-                    href="https://github.com/oscarzhou511">GitHub</a></p>
+            <p>© <span id="currentYear"></span> Oscar Zhou. Year 8 DigiTech.<i class="fas fa-heart"
+                    style="color: #ff7675;"></i>.</p>
         </div>
     </footer>
 
-    <script>
-        // Dark/Light Mode Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = themeToggle.querySelector('img');
-        const body = document.body;
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            // Optionally, store the user's preference in localStorage
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                themeIcon.src = 'https://cdn-icons-png.freepik.com/512/6714/6714978.png';
-                themeIcon.alt = 'Switch to light mode';
-            } else {
-                localStorage.setItem('theme', 'light');
-                themeIcon.src = 'https://static-00.iconduck.com/assets.00/mode-light-icon-2048x2048-no286vfd.png';
-                themeIcon.alt = 'Switch to dark mode';
-            }
-        });
-
-        // Initialize theme on page load (from localStorage)
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-                themeIcon.src = 'https://cdn-icons-png.freepik.com/512/6714/6714978.png';
-                themeIcon.alt = 'Switch to light mode';
-            }
-        });
-
-        // Modified blog loading to create cards
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch("posts.json")
-                .then(response => response.json())
-                .then(posts => {
-                    const blogContainer = document.querySelector(".blog-grid"); // Changed to class
-                    blogContainer.innerHTML = ""; // Clear existing content
-
-                    posts.forEach(post => {
-                        const postElement = document.createElement("div");
-                        postElement.classList.add("blog-card"); // Add the blog-card class
-                        postElement.innerHTML = `
-                    <a href="post.html?file=${post.file}">
-                        <div class="blog-card-content">
-                            <h3>${post.title}</h3>
-                            <p class="blog-date">${post.date}</p>
-                            <p class="blog-excerpt">${post.excerpt || 'Read more...'}</p>
-                            <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
-                        </div>
-                    </a>
-                `;
-                        blogContainer.appendChild(postElement);
-                    });
-                });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
