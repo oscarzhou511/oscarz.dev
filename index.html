@@ -24,7 +24,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oscarz.dev">
 </head>
-<body style="color: #2d3748;">
+<body>
     <!-- Loading Screen -->
     <div class="loading">
         <div class="spinner"></div>
@@ -33,16 +33,16 @@
     <!-- Navigation -->
     <nav class="navbar glass">
         <div class="nav-container">
-            <a href="#home" class="nav-title">OZ</a>
+            <div class="nav-brand">OZ</div>
             
-            <ul class="nav-links">
-                <li><a class="nav-link active" href="#home">Home</a></li>
-                <li><a class="nav-link" href="about.html">About</a></li>
-                <li><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-                <li><a class="nav-link" href="blog.html">Blog</a></li>
-                <li><a class="nav-link" href="music.html">Music</a></li>
-                <li><a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
+            <div class="nav-links">
+                <a class="nav-link active" href="#home">Home</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="portfolio.html">Portfolio</a>
+                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link" href="music.html">Music</a>
+                <a class="nav-link" href="contact.html">Contact</a>
+            </div>
             
             <button class="nav-toggle">
                 <span></span>
@@ -53,16 +53,16 @@
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section id="home" class="hero">
         <div class="hero-content scroll-reveal">
-            <h1 class="hero-title">Oscar <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Zhou</span></h1>
+            <h1 class="hero-title">Oscar <span class="accent-gradient">Zhou</span></h1>
             <p class="hero-subtitle">Musician • Programmer • Creative Developer</p>
             <div class="hero-cta">
-                <a class="btn btn-primary" href="portfolio.html">
+                <a href="portfolio.html" class="btn btn-primary">
                     View My Work
                     <i class="fas fa-arrow-right"></i>
                 </a>
-                <a class="btn btn-secondary" href="contact.html">
+                <a href="contact.html" class="btn btn-secondary">
                     Get In Touch
                     <i class="fas fa-envelope"></i>
                 </a>
@@ -193,11 +193,11 @@
                 <h2 class="section-title" style="margin-bottom: 20px;">Ready to Work Together?</h2>
                 <p class="section-subtitle" style="margin-bottom: 40px;">Let's create something amazing together</p>
                 <div class="hero-cta">
-                    <a class="btn btn-primary" href="contact.html">
+                    <a href="contact.html" class="btn btn-primary">
                         Start a Project
                         <i class="fas fa-rocket"></i>
                     </a>
-                    <a class="btn btn-secondary" href="portfolio.html">
+                    <a href="portfolio.html" class="btn btn-secondary">
                         View Portfolio
                         <i class="fas fa-arrow-right"></i>
                     </a>
