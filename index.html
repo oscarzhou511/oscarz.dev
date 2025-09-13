@@ -1,126 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Oscar Zhou | Home</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- This is just an icon kit provided by FontAwesome, nothing too fancy to see here :) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar Zhou | Ultra-Modern Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Oscar Zhou - Musician, Programmer & Creative Developer. Ultra-modern portfolio with glassmorphism design.">
+    <meta name="keywords" content="Oscar Zhou, musician, programmer, web developer, portfolio, glassmorphism">
+    <meta name="author" content="Oscar Zhou">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Oscar Zhou | Ultra-Modern Portfolio">
+    <meta property="og:description" content="Musician, Programmer & Creative Developer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oscarz.dev">
 </head>
-
 <body>
-    <div class="cursor-dot"></div> <!-- cursor stuff to make cool -->
-    <div class="cursor-outline"></div> <!-- the cursor outline to make it even cooler lol -->
+    <!-- Loading Screen -->
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
 
-    <header>
-        <div class="container">
-            <div class="hero-text">
-                <h1><span>O</span>scar <span>Z</span>hou</h1>
-                <p class="subtitle">Musician | Programmer</p>
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <div class="nav-container">
+            <a href="#home" class="logo">OZ</a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="music.html" class="nav-link">Music</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <button class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content scroll-reveal">
+            <h1 class="hero-title">Oscar <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Zhou</span></h1>
+            <p class="hero-subtitle">Musician • Programmer • Creative Developer</p>
+            <div class="hero-cta">
+                <a href="portfolio.html" class="btn btn-primary">
+                    <span>View My Work</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="contact.html" class="btn btn-secondary">
+                    <span>Get In Touch</span>
+                    <i class="fas fa-envelope"></i>
+                </a>
             </div>
         </div>
-    </header>
+    </section>
 
-    <main>
-        <section id="hobbies" class="container content-section">
-            <h2><i class="fas fa-heart"></i> Passions & Hobbies</h2>
-            <div class="hobbies-grid">
-                <div class="hobby-card">
-                    <h3>Cello</h3>
-                    <p>I love playing the cello because of how close it sounds to the human voice. It is an incredibly
-                        expressive and versatile instrument.</p>
-                </div>
-                <div class="hobby-card">
-                    <h3>Piano</h3>
-                    <p>The piano is an absolutely amazing instrument. People often think it's just about pressing keys
-                        and that's it, but there are so many different types of sounds on the piano.</p>
-                </div>
-                <div class="hobby-card">
-                    <h3>Programming</h3>
-                    <p>Programming is my way of turning crazy ideas into things that work and building overengineered
-                        and unnecessarily complicated applications.</p>
-                </div>
-            </div>
-        </section>
-        <section id="programming-languages" class="container content-section">
-            <h2><i class="fas fa-code"></i> Programming Languages that I work with</h2>
-            <div class="languages-grid">
-                <a href="https://www.python.org/">
-                    <div class="language-item">
-                        <div class="language-icon-container">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <span class="language-name">Python</span>
+    <!-- Features Section -->
+    <section class="section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">What I Do</h2>
+            <p class="section-subtitle">Crafting digital experiences through code and music</p>
+            
+            <div class="card-grid">
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-code"></i>
                     </div>
-                </a>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i class="fab fa-js-square"></i>
-                    </div>
-                    <span class="language-name">JavaScript</span>
+                    <h3 class="card-title">Full-Stack Development</h3>
+                    <p class="card-description">Building modern web applications with cutting-edge technologies and best practices.</p>
                 </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i class="fab fa-java"></i>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-music"></i>
                     </div>
-                    <span class="language-name">Java</span>
+                    <h3 class="card-title">Music Composition</h3>
+                    <p class="card-description">Creating expressive musical pieces for cello, piano, and digital compositions.</p>
                 </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i class="fab fa-html5"></i>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-palette"></i>
                     </div>
-                    <span class="language-name">HTML5</span>
+                    <h3 class="card-title">UI/UX Design</h3>
+                    <p class="card-description">Designing beautiful, intuitive interfaces with modern glassmorphism aesthetics.</p>
                 </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i class="fab fa-css3-alt"></i>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <span class="language-name">CSS3</span>
+                    <h3 class="card-title">Mobile Development</h3>
+                    <p class="card-description">Creating responsive applications that work seamlessly across all devices.</p>
                 </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i><img id="icon"
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1820px-Logo_C_sharp.svg.png"
-                                alt="C++ icon"></i>
-                    </div>
-                    <span class="language-name">C#</span>
-                </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i><img id="icon"
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png"
-                                alt="C++ icon"></i>
-                    </div>
-                    <span class="language-name">C++</span>
-                </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
+                
+                <div class="card glass">
+                    <div class="card-icon">
                         <i class="fas fa-database"></i>
                     </div>
-                    <span class="language-name">SQL</span>
+                    <h3 class="card-title">Data Management</h3>
+                    <p class="card-description">Architecting robust database solutions and data-driven applications.</p>
                 </div>
-                <div class="language-item">
-                    <div class="language-icon-container">
-                        <i class="fab fa-swift"></i>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-lightbulb"></i>
                     </div>
-                    <span class="language-name">Swift</span>
+                    <h3 class="card-title">Creative Solutions</h3>
+                    <p class="card-description">Solving complex problems with innovative thinking and creative approaches.</p>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© <span id="currentYear"></span> Oscar Zhou. Year 8 DigiTech.<i class="fas fa-heart"
-                    style="color: #ff7675;"></i>.</p>
         </div>
-    </footer>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Technologies Section -->
+    <section class="section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Technologies I Use</h2>
+            <p class="section-subtitle">Constantly learning and adapting to new technologies</p>
+            
+            <div class="card-grid">
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3 class="card-title">Python</h3>
+                    <p class="card-description">Backend development, data analysis, and automation.</p>
+                </div>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <h3 class="card-title">JavaScript</h3>
+                    <p class="card-description">Modern ES6+, React, Node.js, and frontend frameworks.</p>
+                </div>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <h3 class="card-title">Java</h3>
+                    <p class="card-description">Enterprise applications and Android development.</p>
+                </div>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="card-title">HTML5/CSS3</h3>
+                    <p class="card-description">Semantic markup and modern CSS with animations.</p>
+                </div>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="card-title">SQL</h3>
+                    <p class="card-description">Database design, optimization, and management.</p>
+                </div>
+                
+                <div class="card glass">
+                    <div class="card-icon">
+                        <i class="fab fa-swift"></i>
+                    </div>
+                    <h3 class="card-title">Swift</h3>
+                    <p class="card-description">iOS and macOS application development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section scroll-reveal">
+        <div class="container">
+            <div class="card glass" style="text-align: center; padding: 60px 40px;">
+                <h2 class="section-title" style="margin-bottom: 20px;">Ready to Work Together?</h2>
+                <p class="section-subtitle" style="margin-bottom: 40px;">Let's create something amazing together</p>
+                <div class="hero-cta">
+                    <a href="contact.html" class="btn btn-primary">
+                        <span>Start a Project</span>
+                        <i class="fas fa-rocket"></i>
+                    </a>
+                    <a href="portfolio.html" class="btn btn-secondary">
+                        <span>View Portfolio</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="assets/js/effects.js"></script>
 </body>
-
 </html>
