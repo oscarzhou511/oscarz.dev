@@ -7,23 +7,23 @@
 }
 
 :root {
-    /* Modern Color Palette */
-    --primary-color: #00d4ff; /* Cyan */
-    --secondary-color: #ff6b6b; /* Coral */
-    --accent-color: #4ecdc4; /* Teal */
-    --dark-color: #2c3e50;
+    /* Bright Harmonious Color Palette */
+    --primary-color: #27a5ff; /* Fresh Clean Blue */
+    --secondary-color: #32ef8a; /* Light Lively Green */
+    --accent-color: #32ef8a; /* Light Lively Green */
+    --dark-color: #1a202c;
     --light-color: #ffffff;
     --text-color: #333;
     
-    /* Glassmorphism Color Palette */
-    --primary-gradient: linear-gradient(135deg, #00d4ff 0%, #4ecdc4 100%);
-    --secondary-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
-    --accent-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    /* Harmonious Gradients */
+    --primary-gradient: linear-gradient(135deg, #27a5ff 0%, #32ef8a 100%);
+    --secondary-gradient: linear-gradient(135deg, #32ef8a 0%, #27a5ff 100%);
+    --accent-gradient: linear-gradient(135deg, #32ef8a 0%, #27a5ff 100%);
     
-    /* Glass Effects */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.18);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    /* Glass Effects with Pale Backgrounds */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(39, 165, 255, 0.1);
     --glass-backdrop: blur(20px);
     
     /* Typography */
@@ -38,7 +38,7 @@
 body {
     font-family: var(--font-primary);
     line-height: 1.6;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, #f8fffe 0%, #f0fff4 100%);
     background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
@@ -54,9 +54,9 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(39, 165, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(50, 239, 138, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(39, 165, 255, 0.05) 0%, transparent 50%);
     animation: float 20s ease-in-out infinite;
     z-index: -1;
 }
@@ -104,7 +104,7 @@ body::before {
     background-clip: text;
     cursor: default;
     user-select: none;
-    text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
+    text-shadow: 0 0 30px rgba(50, 239, 138, 0.3);
 }
 
 /* Navigation Links Container */
@@ -116,7 +116,7 @@ body::before {
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(26, 32, 44, 0.8);
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -128,13 +128,13 @@ body::before {
 
 .nav-link:hover {
     color: var(--primary-color);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(39, 165, 255, 0.1);
     transform: translateY(-2px);
 }
 
 .nav-link.active {
     color: var(--primary-color);
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(39, 165, 255, 0.15);
 }
 
 /* Mobile Toggle Button */
@@ -151,7 +151,7 @@ body::before {
     display: block;
     width: 25px;
     height: 3px;
-    background: white;
+    background: var(--primary-color);
     margin: 3px 0;
     transition: var(--transition-smooth);
     border-radius: 3px;
@@ -175,7 +175,7 @@ body::before {
 .hero-title {
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
-    color: white;
+    color: var(--dark-color);
     margin-bottom: 1rem;
     font-family: var(--font-display);
 }
@@ -189,7 +189,7 @@ body::before {
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(26, 32, 44, 0.7);
     margin-bottom: 2rem;
     line-height: 1.8;
 }
@@ -219,25 +219,26 @@ body::before {
 .btn-primary {
     background: var(--primary-gradient);
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(39, 165, 255, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+    box-shadow: 0 8px 25px rgba(39, 165, 255, 0.4);
 }
 
 .btn-secondary {
     background: var(--glass-bg);
-    color: white;
+    color: var(--primary-color);
     backdrop-filter: var(--glass-backdrop);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(39, 165, 255, 0.2);
 }
 
 .btn-secondary:hover {
     transform: translateY(-3px);
     background: var(--secondary-gradient);
-    box-shadow: var(--glass-shadow);
+    color: white;
+    box-shadow: 0 8px 25px rgba(50, 239, 138, 0.3);
 }
 
 /* Section Styles */
@@ -252,13 +253,13 @@ body::before {
     font-weight: 700;
     text-align: center;
     margin-bottom: 1rem;
-    color: white;
+    color: var(--dark-color);
     font-family: var(--font-display);
 }
 
 .section-subtitle {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(26, 32, 44, 0.6);
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -277,7 +278,7 @@ body::before {
     backdrop-filter: var(--glass-backdrop);
     border-radius: 20px;
     border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 8px 32px 0 rgba(39, 165, 255, 0.08);
     padding: 2rem;
     transition: var(--transition-bounce);
     cursor: pointer;
@@ -285,7 +286,8 @@ body::before {
 
 .glass-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px 0 rgba(31, 38, 135, 0.5);
+    box-shadow: 0 20px 40px 0 rgba(39, 165, 255, 0.12);
+    border-color: rgba(50, 239, 138, 0.3);
 }
 
 .card-icon {
@@ -296,7 +298,7 @@ body::before {
 }
 
 .card-title {
-    color: white;
+    color: var(--dark-color);
     margin-bottom: 1rem;
     font-size: 1.25rem;
     font-weight: 600;
@@ -304,7 +306,7 @@ body::before {
 }
 
 .card-description {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(26, 32, 44, 0.7);
     line-height: 1.6;
     text-align: center;
 }
@@ -316,7 +318,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, #f8fffe 0%, #f0fff4 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -332,8 +334,8 @@ body::before {
 .spinner {
     width: 50px;
     height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid white;
+    border: 3px solid rgba(39, 165, 255, 0.2);
+    border-top: 3px solid var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
