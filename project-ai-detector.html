@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improving the Accuracy & Efficiency of Detecting AI Text | Oscar Zhou</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="personal.css">
+  <link rel="stylesheet" href="assets/css/effects.css">
+  <script src="script.js" defer></script>
+  <script src="assets/js/effects.js" defer></script>
+  <!-- For charts/diagrams: Insert Chart.js, D3.js, or SVG/Canvas libraries here if needed -->
+</head>
+<body>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="personal.html">Personal</a></li>
+      <li><a href="project-ai-detector.html" class="active">AI Detector Project</a></li>
+    </ul>
+  </nav>
+  <header class="primary-bg hero-text" style="position: relative; overflow: hidden;">
+    <h1>Improving the Accuracy & Efficiency of Detecting AI Text</h1>
+    <p class="subtitle">A Modern, Private, On-Device Detector for AI-Generated Content</p>
+    <!-- Animated background shapes -->
+    <div class="animated-shape"></div>
+  </header>
+  <main>
+    <!-- Aim & Goals (Collapsible) -->
+    <section class="content-section">
+      <div class="card">
+        <button class="collapsible">Aim &amp; Goals</button>
+        <div class="content" style="display:none">
+          <p>
+            As AI-generated text becomes more prevalent, especially in academic and professional settings, it is crucial to reliably identify such content. This project aims to provide a secure, fast, and accurate detection tool that works entirely on-device, protecting privacy while exceeding 90% accuracy on public benchmarks.
+          </p>
+          <ul>
+            <li>All detection runs locally—no cloud, no leaks.</li>
+            <li>Accuracy benchmarked against RAID dataset and commercial detectors.</li>
+            <li>Interactive insights and visual explanations for every result.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methods (Tabbed Section) -->
+    <section class="content-section">
+      <div class="card">
+        <h2>Detection Methods</h2>
+        <div class="tabs">
+          <button class="tablink active" onclick="openTab(event, 'logit')">Logit-Based</button>
+          <button class="tablink" onclick="openTab(event, 'classifier')">Classifier-Based</button>
+          <button class="tablink" onclick="openTab(event, 'linguistic')">Linguistic</button>
+        </div>
+        <div id="logit" class="tab-content" style="display:block;">
+          <h3>Logit-Based Detection</h3>
+          <div class="diagram interactive" style="min-height:220px">
+            <!-- Placeholder, insert interactive SVG/Canvas here -->
+            <svg width="100%" height="200"><rect x="10" y="40" width="400" height="80" rx="10" fill="#90EE90" /><text x="30" y="90" font-size="22" fill="#2c3e50">LLM token prediction visualization</text></svg>
+          </div>
+          <button onclick="alert('Python code popover!')">See Implementation</button>
+        </div>
+        <div id="classifier" class="tab-content" style="display:none;">
+          <h3>Classifier-Based Detection</h3>
+          <div class="diagram interactive" style="min-height:220px">
+            <!-- Placeholder, insert flowchart here -->
+            <svg width="100%" height="200"><rect x="10" y="40" width="400" height="80" rx="10" fill="#87CEEB" /><text x="30" y="90" font-size="22" fill="#2c3e50">Classifier ensemble architecture</text></svg>
+          </div>
+          <button onclick="alert('Classifier Python code!')">See Implementation</button>
+        </div>
+        <div id="linguistic" class="tab-content" style="display:none;">
+          <h3>Linguistic-Based Detection</h3>
+          <div class="diagram interactive" style="min-height:220px">
+            <!-- Placeholder, insert bar chart here -->
+            <svg width="100%" height="200"><rect x="10" y="40" width="400" height="80" rx="10" fill="#2ec1cc" /><text x="30" y="90" font-size="22" fill="#fff">Linguistic feature chart</text></svg>
+          </div>
+          <button onclick="alert('Linguistic analysis code!')">See Implementation</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ensemble Overview (Pie Chart) -->
+    <section class="content-section">
+      <div class="card">
+        <h2>Ensemble Model</h2>
+        <canvas id="ensembleChart" width="400" height="220"></canvas>
+        <!-- Placeholder for animated chart, e.g. Chart.js pie chart with weights -->
+        <script>
+          // If Chart.js included
+          // var ctx = document.getElementById('ensembleChart').getContext('2d');
+          // new Chart(ctx, {type:'pie', data:{ /*...*/ }})
+        </script>
+        <p>
+          The final AI score is a weighted combination:
+          <br><b>Desklib classifier:</b> 60% &nbsp; <b>Logit-based:</b> 25% &nbsp; <b>Linguistic:</b> 15%
+        </p>
+      </div>
+    </section>
+
+    <!-- Evaluation (Bar Plot Section) -->
+    <section class="content-section">
+      <div class="card">
+        <h2>Evaluation & Performance</h2>
+        <div id="chart-bar-evaluation" style="min-height:220px; background:#eef; border-radius:10px">
+          <!-- Use Chart.js or SVG for real chart -->
+          <svg width="400" height="200"><rect x="40" y="60" width="60" height="110" fill="#87CEEB"/><rect x="120" y="20" width="60" height="150" fill="#90EE90"/><text x="48" y="190">RAID</text><text x="128" y="190">Your Model</text></svg>
+        </div>
+        <p>
+          Your custom detector achieves <b>95.7% accuracy</b> on the RAID subset—leading among commercial solutions!
+        </p>
+      </div>
+    </section>
+
+    <!-- User Guide -->
+    <section class="content-section">
+      <div class="card">
+        <h2>User Guide</h2>
+        <ol>
+          <li>Clone the <a href="https://github.com/oscarzhou511/AI-Detector-OSA" target="_blank">project repository</a>.</li>
+          <li>Follow the walkthrough in the <a href="https://colab.research.google.com/..." target="_blank">Colab notebook</a>.</li>
+          <li>Run the Python script locally for 100% offline detection.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Reflection (Animated Text) -->
+    <section class="content-section">
+      <div class="card">
+        <h2>Reflection</h2>
+        <p style="animation: fadeInUp 1.5s;">
+          This project was inspired by the need for ethical, practical tools in the rapidly evolving AI landscape.
+          Competing alongside global teams at the International Olympiad in AI was a highlight...
+        </p>
+      </div>
+    </section>
+
+    <!-- References / Bibliography -->
+    <section class="content-section">
+      <div class="card">
+        <button class="collapsible">References & Bibliography</button>
+        <div class="content" style="display:none">
+          <ul>
+            <li>Dugan, Liam, et al. “RAID: A Shared Benchmark...”</li>
+            <li>Minaee, Shervin, et al. “Large Language Models: A Survey...”</li>
+            <li>More are listed in the PDF and GitHub...</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Created by Oscar Zhou &copy; <span id="currentYear"></span></p>
+  </footer>
+  <script>
+    // Collapsible for cards (reuse for each section)
+    document.querySelectorAll(".collapsible").forEach((coll) => {
+      coll.onclick = function () {
+        this.classList.toggle("active");
+        const content = this.nextElementSibling;
+        content.style.display = (content.style.display === "block") ? "none" : "block";
+      };
+    });
+    // Tabs for methods
+    window.openTab = function(evt, tab) {
+      document.querySelectorAll('.tab-content').forEach(e => e.style.display='none');
+      document.querySelectorAll('.tablink').forEach(e => e.classList.remove('active'));
+      document.getElementById(tab).style.display = 'block';
+      evt.currentTarget.classList.add('active');
+    }
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
