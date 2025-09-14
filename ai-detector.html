@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Detection System | Oscar Zhou</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/ai-detector.css">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Advanced AI Detection System - A comprehensive showcase of machine learning techniques for identifying AI-generated content.">
+    <meta name="keywords" content="AI detection, machine learning, neural networks, classification, deep learning">
+    <meta name="author" content="Oscar Zhou">
+    
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <div class="nav-container">
+            <div class="nav-brand">OZ</div>
+            
+            <div class="nav-links">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="portfolio.html">Portfolio</a>
+                <a class="nav-link active" href="ai-detector.html">AI Detector</a>
+                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link" href="music.html">Music</a>
+                <a class="nav-link" href="contact.html">Contact</a>
+            </div>
+            
+            <button class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero ai-hero" id="home">
+        <div class="hero-content scroll-reveal">
+            <h1 class="hero-title">AI Detection <span class="accent-gradient">System</span></h1>
+            <p class="hero-subtitle">Advanced Machine Learning for Content Authentication</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-value">95.7%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">0.2s</span>
+                    <span class="stat-label">Response Time</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">10K+</span>
+                    <span class="stat-label">Tests Passed</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div id="ai-network" class="ai-visualization"></div>
+        </div>
+    </section>
+    
+    <!-- Project Abstract -->
+    <section class="section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Project Abstract</h2>
+            <div class="glass-card abstract-card">
+                <p class="abstract-text">
+                    The AI Detection System represents a cutting-edge approach to identifying artificially generated content 
+                    using advanced machine learning techniques. This project combines natural language processing, 
+                    deep learning architectures, and statistical analysis to achieve industry-leading accuracy rates 
+                    in distinguishing between human and AI-generated text.
+                </p>
+                <div class="abstract-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-brain"></i>
+                        <span>Neural Network Architecture</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>95.7% Accuracy Rate</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Real-time Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Methods -->
+    <section class="section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Key Methods & Techniques</h2>
+            <div class="methods-grid">
+                <div class="glass-card method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="method-title">Transformer Architecture</h3>
+                    <p class="method-description">
+                        Utilized state-of-the-art transformer models with attention mechanisms 
+                        to capture complex linguistic patterns and semantic relationships.
+                    </p>
+                    <div class="method-diagram" id="transformer-diagram"></div>
+                </div>
+                
+                <div class="glass-card method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="method-title">Feature Extraction</h3>
+                    <p class="method-description">
+                        Advanced feature engineering including lexical diversity, 
+                        syntactic complexity, and semantic coherence metrics.
+                    </p>
+                    <div class="method-diagram" id="feature-diagram"></div>
+                </div>
+                
+                <div class="glass-card method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="method-title">Ensemble Learning</h3>
+                    <p class="method-description">
+                        Combined multiple classification models using ensemble techniques 
+                        to maximize accuracy and minimize false positives.
+                    </p>
+                    <div class="method-diagram" id="ensemble-diagram"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Interactive Results -->
+    <section class="section results-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Performance Results</h2>
+            <div class="results-container">
+                <div class="glass-card results-card">
+                    <h3 class="results-title">Accuracy Metrics</h3>
+                    <div id="accuracy-chart" class="interactive-chart"></div>
+                </div>
+                <div class="glass-card results-card">
+                    <h3 class="results-title">Efficiency Analysis</h3>
+                    <div id="efficiency-chart" class="interactive-chart"></div>
+                </div>
+            </div>
+            <div class="glass-card confusion-matrix-card">
+                <h3 class="results-title">Confusion Matrix</h3>
+                <div id="confusion-matrix" class="interactive-chart"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Impact & Significance -->
+    <section class="section impact-section scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Impact & Significance</h2>
+            <div class="impact-grid">
+                <div class="glass-card impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="impact-title">Content Authenticity</h3>
+                    <p class="impact-description">
+                        Protecting academic integrity and combating misinformation 
+                        by providing reliable AI content detection.
+                    </p>
+                </div>
+                
+                <div class="glass-card impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="impact-title">Educational Applications</h3>
+                    <p class="impact-description">
+                        Supporting educators in maintaining academic standards 
+                        and fostering genuine learning experiences.
+                    </p>
+                </div>
+                
+                <div class="glass-card impact-card">
+                    <div class="impact-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="impact-title">Industry Solutions</h3>
+                    <p class="impact-description">
+                        Enabling businesses to verify content authenticity 
+                        and maintain trust in digital communications.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="glass-card significance-card">
+                <h3 class="significance-title">Technical Achievements</h3>
+                <div class="achievements-list">
+                    <div class="achievement-item">
+                        <span class="achievement-metric">95.7%</span>
+                        <span class="achievement-desc">Overall accuracy across diverse text types</span>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-metric">0.2s</span>
+                        <span class="achievement-desc">Average processing time per document</span>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-metric">99.1%</span>
+                        <span class="achievement-desc">Precision rate for AI-generated content</span>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-metric">15+</span>
+                        <span class="achievement-desc">Different AI model types successfully detected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="section cta-section scroll-reveal">
+        <div class="container">
+            <div class="glass-card cta-card">
+                <h2 class="cta-title">Interested in AI Detection Technology?</h2>
+                <p class="cta-description">Explore the technical implementation or discuss potential collaborations</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">
+                        View Source Code
+                        <i class="fas fa-code"></i>
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary">
+                        Get In Touch
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="assets/js/effects.js"></script>
+    <script src="assets/js/ai-detector.js"></script>
+</body>
+</html>
