@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <meta name="description" content="Oscar Zhou - Musician, Programmer &amp; Creative Developer. Ultra-modern portfolio with glassmorphism design." />
+  <meta name="description" content="Oscar Zhou - Musician, Programmer & Creative Developer. Ultra-modern portfolio with glassmorphism design." />
   <meta name="keywords" content="Oscar Zhou, musician, programmer, web developer, portfolio, glassmorphism" />
   <meta name="author" content="Oscar Zhou" />
   <meta property="og:title" content="Oscar Zhou | Ultra-Modern Portfolio" />
-  <meta property="og:description" content="Musician, Programmer &amp; Creative Developer" />
+  <meta property="og:description" content="Musician, Programmer & Creative Developer" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://oscarz.dev" />
 </head>
@@ -82,56 +82,7 @@
       </div>
     </div>
   </section>
-  <section id="detector" class="section scroll-reveal">
-    <div class="container">
-      <h2 class="section-title">AI Content Detector</h2>
-      <p class="section-subtitle">Paste text to analyze the likelihood of AI-generated content</p>
-      <div class="glass-card detector-card">
-        <label for="detector-input" class="card-title" style="display:block;margin-bottom:12px;">Your Text</label>
-        <textarea id="detector-input" class="detector-input" rows="8" placeholder="Paste or type text here..."></textarea>
-        <div class="detector-actions">
-          <button id="detect-btn" class="btn btn-primary">Run Detection <i class="fas fa-magic"></i></button>
-          <button id="clear-btn" class="btn btn-secondary">Clear <i class="fas fa-times"></i></button>
-        </div>
-        <div id="detector-results" class="detector-results">
-          <div class="result-grid">
-            <div class="result-item"><div class="result-label">AI Likelihood</div><div id="ai-score" class="result-value accent-gradient">–</div></div>
-            <div class="result-item"><div class="result-label">Perplexity</div><div id="ppx" class="result-value">–</div></div>
-            <div class="result-item"><div class="result-label">Burstiness</div><div id="burst" class="result-value">–</div></div>
-          </div>
-          <div id="detector-feedback" class="detector-feedback"></div>
-        </div>
-      </div>
-    </div>
-  </section>
   <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
   <script src="assets/js/effects.js"></script>
-  <script>
-    function tokenize(text){return text.toLowerCase().replace(/[^a-z0-9\.!?\s]/g,"").split(/\s+/).filter(Boolean)}
-    function computePerplexity(tokens){if(tokens.length===0)return 0;const f=new Map();for(const t of tokens){f.set(t,(f.get(t)||0)+1)}const N=tokens.length;let s=0;for(const t of tokens){const p=(f.get(t)+1)/(N+f.size);s+=Math.log(p)}const H=-(s/N);return +Math.exp(H).toFixed(2)}
-    function computeBurstiness(text){const sentences=text.split(/[\.!?]+/).map(s=>s.trim()).filter(Boolean);if(sentences.length<=1)return 0;const L=sentences.map(s=>s.split(/\s+/).filter(Boolean).length);const m=L.reduce((a,b)=>a+b,0)/L.length;const v=L.reduce((a,b)=>a+Math.pow(b-m,2),0)/L.length;return +Math.sqrt(v).toFixed(2)}
-    function computeAiLikelihood(ppl,burst){const a=Math.max(0,Math.min(1,(4-Math.min(ppl,8))/4));const b=Math.max(0,Math.min(1,(2-Math.min(burst,4))/2));return +((0.7*a+0.3*b)*100).toFixed(0)}
-    function describe(score){if(score>=80)return"Very likely AI-generated";if(score>=60)return"Likely AI-generated";if(score>=40)return"Uncertain / Mixed signals";if(score>=20)return"Likely human-written";return"Very likely human-written"}
-    function setLoading(x){const btn=document.getElementById('detect-btn');if(!btn)return;btn.disabled=x;btn.innerHTML=x?'Analyzing…':'Run Detection <i class="fas fa-magic"></i>'}
-    function updateResults({score,ppl,burst}){const ai=document.getElementById('ai-score'),ppx=document.getElementById('ppx'),bst=document.getElementById('burst'),fb=document.getElementById('detector-feedback');if(ai)ai.textContent=typeof ppl==='string'&&ppl==='–'?'–':score+'%';if(ppx)ppx.textContent=ppl;if(bst)bst.textContent=burst;if(fb){fb.textContent=typeof ppl==='string'&&ppl==='–'?'':describe(score);fb.className='detector-feedback '+(score>=60?'warn':score>=40?'info':'ok')}}
-    function clearResults(){updateResults({score:0,ppl:'–',burst:'–'})}
-    function runDetection(){const el=document.getElementById('detector-input');const v=(el?.value||'').trim();if(!v){clearResults();return}setLoading(true);setTimeout(()=>{const toks=tokenize(v);const ppl=computePerplexity(toks);const burst=computeBurstiness(v);const score=computeAiLikelihood(ppl,burst);updateResults({score,ppl,burst});setLoading(false)},150)}
-    function wireDetector(){const d=document.getElementById('detect-btn'),c=document.getElementById('clear-btn'),i=document.getElementById('detector-input');d?.addEventListener('click',runDetection);c?.addEventListener('click',()=>{if(i){i.value='';i.focus()}clearResults()});i?.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='enter'){runDetection()}})}
-    document.addEventListener('DOMContentLoaded', wireDetector);
-  </script>
-  <style>
-    .detector-card{padding:24px;display:flex;flex-direction:column;gap:16px;background:var(--glass-bg,rgba(255,255,255,.08));border:1px solid var(--glass-border,rgba(255,255,255,.18));backdrop-filter:blur(10px)}
-    .detector-input{width:100%;resize:vertical;border-radius:14px;padding:16px;color:var(--text,#e8f1ff);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
-    .detector-actions{display:flex;gap:12px;flex-wrap:wrap}
-    .detector-results{margin-top:8px}
-    .result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-    .result-item{padding:14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
-    .result-label{opacity:.8;font-size:.9rem;margin-bottom:6px}
-    .result-value{font-family:var(--font-display,Poppins,Inter,system-ui);font-size:1.25rem;font-weight:700}
-    .detector-feedback{margin-top:12px;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg, rgba(0,209,255,.08), rgba(0,255,170,.08))}
-    .detector-feedback.ok{border-color:rgba(0,255,170,.35)}
-    .detector-feedback.info{border-color:rgba(0,209,255,.35)}
-    .detector-feedback.warn{border-color:rgba(255,187,0,.35)}
-  </style>
 </body>
 </html>
