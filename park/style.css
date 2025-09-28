@@ -56,11 +56,12 @@ th {
 }
 
 /* Likelihood Color Coding */
-.ll-extremely-likely { background-color: rgba(255, 0, 0, 0.5); }
+.ll-almost-certain { background-color: rgba(255, 0, 0, 0.5); }
 .ll-very-likely { background-color: rgba(255, 100, 0, 0.5); }
 .ll-likely { background-color: rgba(255, 200, 0, 0.5); }
 .ll-possible { background-color: rgba(0, 150, 255, 0.4); }
 .ll-unlikely { background-color: rgba(0, 200, 0, 0.3); }
+.ll-extremely-unlikely { background-color: rgba(0, 200, 0, 0.6); }
 
 /* Autocomplete styles */
 .autocomplete-items div {
