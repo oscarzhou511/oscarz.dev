@@ -3,39 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parking Ranger Watch</title>
+    <title>Parking Ranger Watch | Oscar Zhou</title>
+    
+    <!-- Google Fonts - matching main site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Analyze historical parking ticket data from Adelaide to predict parking ranger likelihood on specific streets and times.">
+    <meta name="keywords" content="parking, Adelaide, ranger, tickets, data analysis, street parking">
+    <meta name="author" content="Oscar Zhou">
 </head>
 <body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Main Content -->
     <div class="container">
         <h1>Parking Ranger Watch</h1>
         <p class="about">
             This tool analyzes historical parking ticket data from the City of Adelaide to show the likelihood of a parking ranger being on a specific street at a given time. Use the search below to find a street.
         </p>
-
+        
+        <!-- Glass Search Input -->
         <input type="text" id="searchInput" placeholder="Search for a street name...">
         <div id="autocomplete-list" class="autocomplete-items"></div>
-
+        
+        <!-- Results Section -->
         <div id="results" class="hidden">
             <h2 id="streetTitle"></h2>
             
-            <div class="card" id="current-hour-card">
+            <!-- Current Hour Card -->
+            <div class="card glass-card" id="current-hour-card">
                 <h3>Right Now</h3>
                 <p id="currentHourResult"></p>
             </div>
-
-            <div class="card" id="today-schedule-card">
+            
+            <!-- Today's Schedule Card -->
+            <div class="card glass-card" id="today-schedule-card">
                 <h3>Today's Schedule</h3>
                 <table id="todaySchedule"></table>
             </div>
-
-            <div class="card" id="weekly-schedule-card">
+            
+            <!-- Weekly Schedule Card -->
+            <div class="card glass-card" id="weekly-schedule-card">
                 <h3>Full Weekly Schedule</h3>
                 <table id="weeklySchedule"></table>
             </div>
         </div>
     </div>
-
+    
+    <!-- Scripts -->
+    <script>
+        // Hide loading animation when page loads
+        window.addEventListener('load', () => {
+            const loading = document.querySelector('.loading');
+            if (loading) {
+                loading.classList.add('fade-out');
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 500);
+            }
+        });
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
