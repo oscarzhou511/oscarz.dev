@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Portfolio | Oscar Zhou</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="assets/css/styles.css" rel="stylesheet"/>
+  <meta content="Oscar Zhou's Portfolio - Showcase of programming projects, web development work, and creative solutions." name="description"/>
+  <meta content="portfolio, projects, web development, programming, Oscar Zhou, showcase" name="keywords"/>
+  <meta content="Oscar Zhou" name="author"/>
+</head>
+<body>
+  <div class="loading"><div class="spinner"></div></div>
+  
+  <nav class="navbar glass">
+    <div class="nav-container">
+      <div class="nav-brand">OZ</div>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link active" href="portfolio.html">Portfolio</a>
+        <a class="nav-link" href="blog.html">Blog</a>
+        <a class="nav-link" href="music.html">Music</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+        <a class="nav-link" href="ai-detector.html">AI Detector</a>
+      </div>
+      <button class="nav-toggle">≡</button>
+    </div>
+  </nav>
+
+  <section class="hero portfolio-hero" id="portfolio">
+    <div class="hero-content scroll-reveal">
+      <h1 class="hero-title">My <span class="accent-gradient">Portfolio</span></h1>
+      <p class="hero-subtitle">A showcase of projects that blend creativity with technical expertise</p>
+    </div>
+  </section>
+
+  <section class="section scroll-reveal">
+    <div class="container">
+      <div class="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Development</button>
+        <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+        <button class="filter-btn" data-filter="tools">Tools & Utilities</button>
+        <button class="filter-btn" data-filter="music">Music Projects</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section scroll-reveal">
+    <div class="container">
+      <div class="portfolio-grid">
+        
+        <div class="glass-card project-card" data-category="web tools">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-robot"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Web API</span>
+            </div>
+            <h3 class="project-title">AI Content Detection System</h3>
+            <p class="project-description">Advanced machine learning system for detecting AI-generated content with glassmorphism web interface and real-time analysis capabilities.</p>
+            <div class="project-links">
+              <a href="ai-detector.html" class="btn btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-secondary">Source Code</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="web">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-globe"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <h3 class="project-title">Personal Portfolio Website</h3>
+            <p class="project-description">Modern portfolio website featuring glassmorphism design, responsive layouts, and interactive animations. Built with mobile-first approach.</p>
+            <div class="project-links">
+              <a href="index.html" class="btn btn-primary">Live Site</a>
+              <a href="#" class="btn btn-secondary">View Code</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="mobile">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">Swift</span>
+              <span class="tag">iOS</span>
+              <span class="tag">UI/UX</span>
+            </div>
+            <h3 class="project-title">iOS Music Practice App</h3>
+            <p class="project-description">Comprehensive practice companion for musicians with metronome, tuner, and practice session tracking. Designed with focus on user experience.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-primary">App Store</a>
+              <a href="#" class="btn btn-secondary">Details</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="tools">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-database"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Data Analysis</span>
+            </div>
+            <h3 class="project-title">Data Processing Pipeline</h3>
+            <p class="project-description">Automated data processing system for handling large datasets with real-time analytics and visualization capabilities.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-secondary">Documentation</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="web">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">MongoDB</span>
+            </div>
+            <h3 class="project-title">E-commerce Platform</h3>
+            <p class="project-description">Full-stack e-commerce solution with user authentication, payment processing, and inventory management. Scalable and secure architecture.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-secondary">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card" data-category="music">
+          <div class="project-image">
+            <div class="project-placeholder">
+              <i class="fas fa-music"></i>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="tag">Digital Audio</span>
+              <span class="tag">Composition</span>
+              <span class="tag">Performance</span>
+            </div>
+            <h3 class="project-title">Original Compositions</h3>
+            <p class="project-description">Collection of original musical works for cello, piano, and digital ensembles. Exploring themes of technology and human emotion.</p>
+            <div class="project-links">
+              <a href="music.html" class="btn btn-primary">Listen</a>
+              <a href="#" class="btn btn-secondary">Sheet Music</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section scroll-reveal">
+    <div class="container">
+      <div class="glass-card cta-card" style="text-align:center;padding:60px 40px;">
+        <h2 class="section-title" style="margin-bottom:20px;">Interested in Collaborating?</h2>
+        <p class="section-subtitle" style="margin-bottom:40px;">Let's work together to create something amazing</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="contact.html">Start a Project <i class="fas fa-rocket"></i></a>
+          <a class="btn btn-secondary" href="about.html">Learn More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer glass">
+    <div class="footer-content">
+      <div class="footer-brand">OZ</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2025 Oscar Zhou. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/your-kit-id.js"></script>
+  <script src="assets/js/effects.js"></script>
+  <script>
+    // Portfolio filtering functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active class from all buttons
+          filterBtns.forEach(b => b.classList.remove('active'));
+          // Add active class to clicked button
+          btn.classList.add('active');
+          
+          const filter = btn.dataset.filter;
+          
+          projectCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category.includes(filter)) {
+              card.style.display = 'block';
+              card.style.animation = 'fadeIn 0.5s ease-in-out';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
