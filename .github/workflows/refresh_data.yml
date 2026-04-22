@@ -23,23 +23,15 @@ jobs:
     - name: Install dependencies
       run: pip install requests
 
-    - name: Debug - List all files
-      # This will help us see exactly where update_svgs.py is hiding
-      run: find . -maxdepth 3 -not -path '*/.*'
-
     - name: Run update script
-      run: |
-        # This command finds the script wherever it is and runs it from its own directory
-        SCRIPT_PATH=$(find . -name "update_svgs.py" | head -n 1)
-        SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
-        echo "Running script found at: $SCRIPT_PATH"
-        cd "$SCRIPT_DIR"
-        python update_svgs.py
+      # Use the exact filename found in your logs
+      working-directory: fuel
+      run: python update_svg.py
 
     - name: Commit and push changes
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        # Search for all generated SVGs and add them
-        find . -name "*.svg" -exec git add {} +
+        # Add the SVGs inside the fuel folder
+        git add fuel/*.svg
         git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update fuel cycle SVGs" && git push)
