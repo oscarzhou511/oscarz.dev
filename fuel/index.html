@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Price Predictor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem 1rem;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            max-width: 520px;
+            width: 100%;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #fff;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+        }
+
+        select:disabled {
+            background-color: #f8fafc;
+            cursor: not-allowed;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        #loadingState,
+        #cycleStatus {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            min-height: 1.2rem;
+        }
+
+        .fuel-type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .fuel-type-selector>div {
+            flex: 1;
+        }
+
+        .fuel-type-selector label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .fuel-type-selector input[type="radio"] {
+            display: none;
+        }
+
+        .fuel-type-selector input[type="radio"]:checked+label {
+            border-color: var(--primary);
+            background-color: #f0f9ff;
+            color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .result-card {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #f8fafc;
+            display: none;
+        }
+
+        .result-card.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .advice-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .advice-reason {
+            font-size: 0.95rem;
+            text-align: center;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .urgent {
+            color: var(--danger);
+        }
+
+        .wait {
+            color: var(--success);
+        }
+
+        .monitor {
+            color: var(--warning);
+        }
+
+        .change {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .change.up {
+            color: var(--danger);
+        }
+
+        .change.down {
+            color: var(--success);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Fuel Predictor</h1>
+        <p class="subtitle">Ampol TGP & Local Cycle Analysis</p>
+
+        <div id="loadingState">Fetching Ampol TGP...</div>
+
+        <div class="form-group">
+            <label>1. Fuel Type</label>
+            <div class="fuel-type-selector">
+                <div>
+                    <input type="radio" id="fuelPetrol" name="fuelType" value="petrol" onchange="onFuelTypeChange()"
+                        checked>
+                    <label for="fuelPetrol">Petrol (U91/E10)</label>
+                </div>
+                <div>
+                    <input type="radio" id="fuelDiesel" name="fuelType" value="diesel" onchange="onFuelTypeChange()">
+                    <label for="fuelDiesel">Diesel</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>2. Your City</label>
+            <select id="city" onchange="onCityChange()" disabled></select>
+        </div>
+
+        <div id="cycleStatus"></div>
+
+        <button id="predictBtn" onclick="calculatePrediction()" disabled>Predict Tomorrow's Price</button>
+
+        <div id="resultCard" class="result-card">
+            <div id="petrolAdviceResult" class="hidden">
+                <div id="adviceTitle" class="advice-title"></div>
+                <p id="adviceReason" class="advice-reason"></p>
+            </div>
+            <div id="dieselPredictionResult" class="hidden">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding: 0.5rem 0;">
+                    <span style="font-weight:600">Metropolitan:</span>
+                    <span id="dieselMetroChange" class="change">--</span>
+                </div>
+                <hr style="border:0; border-top:1px dashed #cbd5e1; margin:0.5rem 0;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding: 0.5rem 0;">
+                    <span style="font-weight:600">Rural/Regional:</span>
+                    <span id="dieselRuralChange" class="change">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const TGP_URL = "https://assets.contentstack.io/v3/assets/blt35cb056c1c8431c3/bltbb6f9915e2ec22d2/Ampol_Terminal_Gate_Prices1.pdf";
+        const PETROL_CITIES = ["Adelaide", "Sydney", "Melbourne", "Brisbane", "Perth", "Canberra", "Hobart", "Darwin"];
+
+        let fuelData = {};
+        const EXCISE = 26.3, GST = 1.1, MARGIN = 12.0;
+
+        window.onload = () => fetchTGP();
+
+        async function fetchTGP() {
+            try {
+                const resp = await fetch(TGP_URL);
+                const buf = await resp.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+                const page = await pdf.getPage(1);
+                const content = await page.getTextContent();
+                const items = content.items.map(i => ({ str: i.str.trim(), x: Math.round(i.transform[4]), y: Math.round(i.transform[5]) })).filter(i => i.str !== "");
+                let rows = [];
+                items.forEach(i => { let r = rows.find(row => Math.abs(row.y - i.y) < 5); if (r) r.items.push(i); else rows.push({ y: i.y, items: [i] }); });
+                const C_MASTER = ["Sydney", "Newcastle", "Brisbane", "Cairns", "Gladstone", "Townsville", "Mackay", "Melbourne", "Corio", "Devonport", "Hobart", "Burnie", "Adelaide", "Port Bonython", "Darwin", "Albany", "Esperance", "Fremantle", "Geraldton", "Port Hedland", "Broome", "Kwinana"];
+
+                rows.forEach(r => {
+                    let txt = r.items.map(i => i.str).join(' ');
+                    let city = C_MASTER.find(c => txt.includes(c));
+                    if (city) {
+                        fuelData[city] = { "E10": [], "Unleaded 91": [], "Diesel": [] };
+                        r.items.forEach(i => {
+                            let val = parseFloat(i.str.replace(/[\*,]/g, ''));
+                            if (!isNaN(val) && val > 50) {
+                                if (Math.abs(i.x - 543) < 90) fuelData[city]["E10"].push(val);
+                                if (Math.abs(i.x - 679) < 90) fuelData[city]["Unleaded 91"].push(val);
+                                if (Math.abs(i.x - 1168) < 90) fuelData[city]["Diesel"].push(val);
+                            }
+                        });
+                    }
+                });
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('city').disabled = false;
+                document.getElementById('predictBtn').disabled = false;
+                updateCityDropdown(); // Initial population
+            } catch (e) {
+                document.getElementById('loadingState').textContent = "Error: " + e.message;
+            }
+        }
+
+        // Only update the city list when Petrol/Diesel toggle is changed
+        function onFuelTypeChange() {
+            updateCityDropdown();
+            clearResults();
+        }
+
+        // Just clear results when city is changed
+        function onCityChange() {
+            clearResults();
+        }
+
+        function clearResults() {
+            document.getElementById('resultCard').classList.remove('active');
+            document.getElementById('cycleStatus').textContent = "";
+        }
+
+        function updateCityDropdown() {
+            const type = document.querySelector('input[name="fuelType"]:checked').value;
+            const select = document.getElementById('city');
+            const list = type === 'petrol' ? PETROL_CITIES : Object.keys(fuelData).sort();
+
+            // Rebuild list
+            select.innerHTML = list.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        async function getCycle(city) {
+            const resp = await fetch(`cycle_${city}.svg`);
+            if (!resp.ok) throw new Error("SVG not found. Run Python script.");
+            const svg = await resp.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(svg, "image/svg+xml");
+            const paths = Array.from(doc.querySelectorAll('path'));
+
+            // Find path with most commands (the price line)
+            const target = paths.reduce((a, b) => (a.getAttribute('d') || "").length > (b.getAttribute('d') || "").length ? a : b);
+            const yCoords = [...target.getAttribute('d').replace(/[a-zA-Z,]/g, ' ').split(/\s+/).filter(n => n.length > 0)].map(Number).filter((_, i) => i % 2 === 1);
+
+            const curr = yCoords[yCoords.length - 1], prev = yCoords[yCoords.length - 2];
+            const min = Math.min(...yCoords), max = Math.max(...yCoords), range = max - min;
+
+            if ((prev - curr) > range * 0.15) return 'HIKE';
+            if (curr > (max - range * 0.2)) return 'TROUGH';
+            if (curr < (min + range * 0.2)) return 'PEAK';
+            return 'DECLINE';
+        }
+
+        async function calculatePrediction() {
+            const type = document.querySelector('input[name="fuelType"]:checked').value;
+            const city = document.getElementById('city').value;
+            const btn = document.getElementById('predictBtn');
+            btn.disabled = true;
+
+            try {
+                if (type === 'petrol') {
+                    const state = await getCycle(city);
+                    const data = fuelData[city]['Unleaded 91'].length > 0 ? fuelData[city]['Unleaded 91'] : fuelData[city]['E10'];
+                    const tgpDelta = data[1] - data[0];
+                    let title, reason, urg;
+
+                    if (state === 'HIKE' || state === 'PEAK') {
+                        title = "AVOID FILLING"; reason = "Prices are at the top of the cycle."; urg = "urgent";
+                    } else if (state === 'TROUGH') {
+                        if (tgpDelta > 2.0) { title = "URGENT: BUY NOW"; reason = "Cycle bottom reached & TGP rising. Spike imminent."; urg = "urgent"; }
+                        else { title = "BUY NOW"; reason = "Prices at their lowest point in the cycle."; urg = "wait"; }
+                    } else {
+                        if (tgpDelta < -2.0) { title = "DEFINITELY WAIT"; reason = "Falling prices & TGP drop will accelerate discounts."; urg = "wait"; }
+                        else if (tgpDelta > 2.0) { title = "CONSIDER BUYING"; reason = "Prices falling but TGP rise may stop discount early."; urg = "monitor"; }
+                        else { title = "WAIT"; reason = "Daily decline phase. Tomorrow should be cheaper."; urg = "wait"; }
+                    }
+                    document.getElementById('petrolAdviceResult').classList.remove('hidden');
+                    document.getElementById('dieselPredictionResult').classList.add('hidden');
+                    document.getElementById('adviceTitle').textContent = title;
+                    document.getElementById('adviceTitle').className = 'advice-title ' + urg;
+                    document.getElementById('adviceReason').textContent = reason;
+                    document.getElementById('cycleStatus').textContent = "Detected Cycle State: " + state;
+                } else {
+                    const data = fuelData[city]['Diesel'];
+                    const delta = data[1] - data[0];
+                    const rMarg = delta > 0 ? delta * 1.5 : delta * 0.5;
+                    const calc = (tgp, trans, marg) => ((tgp + EXCISE + trans + marg) * GST);
+                    const mToday = calc(data[0], 3, MARGIN), mTom = calc(data[1], 3, MARGIN + rMarg);
+                    const rToday = calc(data[0], 12, MARGIN), rTom = calc(data[1], 12, MARGIN + rMarg);
+                    const getTxt = (n, t) => { const d = ((t - n) / n * 100).toFixed(2); return d > 0 ? `+${d}% 📈` : `${d}% 📉`; };
+
+                    document.getElementById('petrolAdviceResult').classList.add('hidden');
+                    document.getElementById('dieselPredictionResult').classList.remove('hidden');
+                    document.getElementById('dieselMetroChange').textContent = getTxt(mToday, mTom);
+                    document.getElementById('dieselMetroChange').className = 'change ' + (mTom > mToday ? 'up' : 'down');
+                    document.getElementById('dieselRuralChange').textContent = getTxt(rToday, rTom);
+                    document.getElementById('dieselRuralChange').className = 'change ' + (rTom > rToday ? 'up' : 'down');
+                }
+                document.getElementById('resultCard').classList.add('active');
+            } catch (e) { alert(e.message); } finally { btn.disabled = false; }
+        }
+    </script>
+</body>
+
+</html>
