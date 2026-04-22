@@ -25,7 +25,7 @@ jobs:
       run: pip install requests
 
     - name: Run update script
-      run: python update_svgs.py
+      run: python fuel/update_svgs.py
 
     - name: Commit and push changes
       run: |
