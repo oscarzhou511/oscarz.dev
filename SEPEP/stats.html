@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netball Stats Tracker</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Art direction: Sports stats tracker → energetic, precise, clean
+       Palette: Dark mode primary, vivid green accent (netball/sport energy)
+       Typography: Satoshi (body) + DM Mono (numbers)
+       Density: Compact but spacious enough for big tap targets */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+
+      --radius-sm: 0.375rem; --radius-md: 0.5rem;
+      --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* Sport Green palette */
+      --color-bg:             #111413;
+      --color-surface:        #181c1a;
+      --color-surface-2:      #1d2220;
+      --color-surface-offset: #222825;
+      --color-divider:        #2a3230;
+      --color-border:         #323b38;
+      --color-text:           #d4d9d7;
+      --color-text-muted:     #7a8882;
+      --color-text-faint:     #4a5552;
+      --color-text-inverse:   #0d1210;
+
+      --color-primary:        #3dba6f;
+      --color-primary-hover:  #2ea35f;
+      --color-primary-active: #20884e;
+      --color-primary-highlight: #1a2e22;
+
+      --color-error:          #e05c5c;
+      --color-error-hover:    #c94444;
+      --color-error-active:   #b03030;
+      --color-error-highlight: #2d1a1a;
+
+      --color-warning:        #e08c3d;
+      --color-warning-hover:  #c97a2a;
+      --color-warning-highlight: #2d2016;
+
+      --color-blue:           #4a9ed6;
+      --color-blue-highlight: #162030;
+
+      --color-purple:         #9b72d8;
+      --color-purple-highlight: #211730;
+
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.25);
+      --shadow-md: 0 4px 12px oklch(0 0 0 / 0.35);
+      --shadow-lg: 0 12px 32px oklch(0 0 0 / 0.45);
+
+      --font-body: 'Satoshi', 'Helvetica Neue', sans-serif;
+      --font-mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body {
+      min-height: 100dvh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.5;
+    }
+
+    img, svg { display: block; }
+    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    input, select { font: inherit; color: inherit; }
+    button, [role="button"] {
+      transition: background var(--transition), color var(--transition),
+                  border-color var(--transition), box-shadow var(--transition),
+                  transform var(--transition);
+    }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+
+    /* ─── Layout ─── */
+    .app {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100dvh;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1;
+    }
+    .logo-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    /* ─── Game Tabs ─── */
+    .game-tabs-wrapper {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 var(--space-6);
+    }
+    .game-tabs {
+      display: flex;
+      gap: var(--space-1);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .game-tabs::-webkit-scrollbar { display: none; }
+    .game-tab {
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      border-radius: 0;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .game-tab:hover { color: var(--color-text); }
+    .game-tab.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* ─── Main ─── */
+    .main {
+      padding: var(--space-6);
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* ─── Score Banner ─── */
+    .score-banner {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+    .score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .score-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .score-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xl);
+      font-weight: 500;
+      color: var(--color-text);
+    }
+    .score-value.goals { color: var(--color-primary); }
+    .score-value.missed { color: var(--color-error); }
+    .score-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--color-border);
+    }
+    .accuracy-ring {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .accuracy-pct {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--color-warning);
+    }
+
+    /* ─── Section card ─── */
+    .section-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-header {
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--color-divider);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .section-dot {
+      width: 8px; height: 8px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .section-body {
+      padding: var(--space-5) var(--space-6);
+    }
+
+    /* ─── Action buttons grid ─── */
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+    .btn-grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (max-width: 480px) {
+      .btn-grid-3 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── Action Buttons ─── */
+    .action-btn {
+      padding: var(--space-5) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid transparent;
+      font-size: var(--text-base);
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      text-align: center;
+      min-height: 80px;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .action-btn:active { transform: scale(0.97); }
+
+    .btn-success {
+      background: var(--color-primary-highlight);
+      border-color: oklch(from var(--color-primary) l c h / 0.3);
+      color: var(--color-primary);
+    }
+    .btn-success:hover { background: oklch(from var(--color-primary) l c h / 0.2); }
+
+    .btn-danger {
+      background: var(--color-error-highlight);
+      border-color: oklch(from var(--color-error) l c h / 0.3);
+      color: var(--color-error);
+    }
+    .btn-danger:hover { background: oklch(from var(--color-error) l c h / 0.2); }
+
+    .btn-blue {
+      background: var(--color-blue-highlight);
+      border-color: oklch(from var(--color-blue) l c h / 0.3);
+      color: var(--color-blue);
+    }
+    .btn-blue:hover { background: oklch(from var(--color-blue) l c h / 0.2); }
+
+    .btn-purple {
+      background: var(--color-purple-highlight);
+      border-color: oklch(from var(--color-purple) l c h / 0.3);
+      color: var(--color-purple);
+    }
+    .btn-purple:hover { background: oklch(from var(--color-purple) l c h / 0.2); }
+
+    .btn-warning {
+      background: var(--color-warning-highlight);
+      border-color: oklch(from var(--color-warning) l c h / 0.3);
+      color: var(--color-warning);
+    }
+    .btn-warning:hover { background: oklch(from var(--color-warning) l c h / 0.2); }
+
+    .btn-neutral {
+      background: var(--color-surface-offset);
+      border-color: var(--color-border);
+      color: var(--color-text);
+    }
+    .btn-neutral:hover { background: var(--color-divider); }
+
+    .btn-special {
+      background: linear-gradient(135deg, var(--color-primary-highlight), var(--color-blue-highlight));
+      border-color: oklch(from var(--color-primary) l c h / 0.35);
+      color: var(--color-primary);
+      grid-column: 1 / -1;
+    }
+    .btn-special:hover { border-color: oklch(from var(--color-primary) l c h / 0.6); }
+
+    .action-btn-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    .action-btn-label { font-size: var(--text-sm); font-weight: 600; }
+    .action-btn-count {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      background: oklch(from var(--color-text) l c h / 0.12);
+      color: var(--color-text-muted);
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      padding: 1px 7px;
+    }
+
+    /* ─── Center Pass Modal ─── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: oklch(0 0 0 / 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(16px) scale(0.97);
+      transition: transform var(--transition);
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+    .modal-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .modal-section {
+      margin-bottom: var(--space-5);
+    }
+    .modal-section-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Player select pills */
+    .player-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .player-pill {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface-offset);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .player-pill:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .player-pill.selected {
+      background: var(--color-primary-highlight);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    /* Outcome toggle */
+    .outcome-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    .outcome-btn {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface-offset);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      transition: all var(--transition);
+    }
+    .outcome-btn.success.selected {
+      background: var(--color-primary-highlight);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .outcome-btn.fail.selected {
+      background: var(--color-error-highlight);
+      border-color: var(--color-error);
+      color: var(--color-error);
+    }
+    .outcome-btn:hover:not(.selected) { border-color: var(--color-text-faint); color: var(--color-text); }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+    .btn-primary {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover { background: var(--color-primary-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-ghost {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .btn-ghost:hover { border-color: var(--color-text-faint); color: var(--color-text); }
+
+    /* ─── Activity Log ─── */
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      max-height: 280px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-border) transparent;
+    }
+    .log-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      background: var(--color-surface-offset);
+      animation: slideIn 0.2s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .log-icon {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .log-text {
+      flex: 1;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+    .log-time {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+    }
+    .log-empty {
+      text-align: center;
+      padding: var(--space-8);
+      color: var(--color-text-faint);
+      font-size: var(--text-sm);
+    }
+
+    /* ─── Stats Summary Table ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-3);
+    }
+    .stat-cell {
+      background: var(--color-surface-offset);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .stat-cell-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .stat-cell-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    /* ─── All Games Overview ─── */
+    .games-overview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-3);
+    }
+    @media (max-width: 600px) {
+      .games-overview { grid-template-columns: repeat(3, 1fr); }
+    }
+    .game-card {
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-3);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .game-card:hover { border-color: var(--color-primary); background: var(--color-primary-highlight); }
+    .game-card.current { border-color: var(--color-primary); background: var(--color-primary-highlight); }
+    .game-card-num {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .game-card-goals {
+      font-family: var(--font-mono);
+      font-size: var(--text-xl);
+      font-weight: 500;
+      color: var(--color-primary);
+    }
+    .game-card-accuracy {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* ─── Reset button ─── */
+    .btn-reset {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-error);
+      opacity: 0.6;
+      transition: all var(--transition);
+    }
+    .btn-reset:hover { opacity: 1; border-color: var(--color-error); }
+
+    /* ─── Undo button ─── */
+    .btn-undo {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      transition: all var(--transition);
+    }
+    .btn-undo:hover { border-color: var(--color-text-faint); color: var(--color-text); }
+
+    /* ─── Header controls ─── */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 520px) {
+      .main { padding: var(--space-4); gap: var(--space-4); }
+      .header { padding: var(--space-3) var(--space-4); }
+      .game-tabs-wrapper { padding: 0 var(--space-4); }
+      .section-body { padding: var(--space-4); }
+      .section-header { padding: var(--space-3) var(--space-4); }
+      .score-banner { padding: var(--space-4); flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
+      .btn-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── Toast ─── */
+    .toast {
+      position: fixed;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 300;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ─── Players manage section ─── */
+    .players-manage {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .player-input-row {
+      display: flex;
+      gap: var(--space-2);
+    }
+    .player-input {
+      flex: 1;
+      background: var(--color-surface-offset);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .player-input:focus { border-color: var(--color-primary); }
+    .player-input::placeholder { color: var(--color-text-faint); }
+    .player-list-manage {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .player-tag {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: var(--space-1) var(--space-3);
+      font-size: var(--text-sm);
+    }
+    .player-tag-remove {
+      color: var(--color-text-faint);
+      font-size: 0.9rem;
+      line-height: 1;
+      padding: 0 2px;
+    }
+    .player-tag-remove:hover { color: var(--color-error); }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="#0d1210" stroke-width="2"/>
+          <path d="M12 3 Q 16 7 16 12 Q 16 17 12 21" stroke="#0d1210" stroke-width="1.5" fill="none"/>
+          <path d="M12 3 Q 8 7 8 12 Q 8 17 12 21" stroke="#0d1210" stroke-width="1.5" fill="none"/>
+          <path d="M3 12 Q 7 9 12 9 Q 17 9 21 12" stroke="#0d1210" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text">Netball Stats</div>
+        <div class="logo-sub">Game Tracker</div>
+      </div>
+    </div>
+    <div class="header-controls">
+      <button class="btn-undo" id="undoBtn" onclick="undoLast()" title="Undo last action">↩ Undo</button>
+      <button class="btn-reset" onclick="confirmReset()" title="Reset current game">Reset</button>
+    </div>
+  </header>
+
+  <!-- Game Tabs -->
+  <div class="game-tabs-wrapper">
+    <nav class="game-tabs" role="tablist" aria-label="Game selection">
+      <button class="game-tab active" role="tab" aria-selected="true" onclick="switchGame(1, this)">Game 1</button>
+      <button class="game-tab" role="tab" aria-selected="false" onclick="switchGame(2, this)">Game 2</button>
+      <button class="game-tab" role="tab" aria-selected="false" onclick="switchGame(3, this)">Game 3</button>
+      <button class="game-tab" role="tab" aria-selected="false" onclick="switchGame(4, this)">Game 4</button>
+      <button class="game-tab" role="tab" aria-selected="false" onclick="switchGame(5, this)">Game 5</button>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Score Banner -->
+    <div class="score-banner">
+      <div class="score-item">
+        <span class="score-label">Goals</span>
+        <span class="score-value goals" id="scoreGoals" style="font-variant-numeric: tabular-nums;">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <span class="score-label">Missed</span>
+        <span class="score-value missed" id="scoreMissed" style="font-variant-numeric: tabular-nums;">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="accuracy-ring">
+        <span class="score-label">Accuracy</span>
+        <span class="accuracy-pct" id="scoreAccuracy" style="font-variant-numeric: tabular-nums;">—</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <span class="score-label">Passes ✓</span>
+        <span class="score-value" id="scorePasses" style="color: var(--color-blue); font-variant-numeric: tabular-nums;">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item">
+        <span class="score-label">Passes ✗</span>
+        <span class="score-value" id="scorePassMissed" style="color: var(--color-text-muted); font-variant-numeric: tabular-nums;">0</span>
+      </div>
+    </div>
+
+    <!-- Shooting Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-primary);"></span>
+        <span class="section-title">Shooting</span>
+      </div>
+      <div class="section-body">
+        <div class="btn-grid">
+          <button class="action-btn btn-success" onclick="recordAction('goal')" aria-label="Record goal scored">
+            <span class="action-btn-icon">🎯</span>
+            <span class="action-btn-label">Goal Scored</span>
+            <span class="action-btn-count" id="cnt-goal">0</span>
+          </button>
+          <button class="action-btn btn-danger" onclick="recordAction('miss')" aria-label="Record goal missed">
+            <span class="action-btn-icon">❌</span>
+            <span class="action-btn-label">Goal Missed</span>
+            <span class="action-btn-count" id="cnt-miss">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Pass Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-warning);"></span>
+        <span class="section-title">Center Pass</span>
+      </div>
+      <div class="section-body">
+        <div class="btn-grid">
+          <button class="action-btn btn-special" onclick="openCenterPassModal()" aria-label="Record center pass" style="min-height: 70px;">
+            <span class="action-btn-icon">🏐</span>
+            <span class="action-btn-label">Center Pass →</span>
+            <span class="action-btn-count" id="cnt-cp">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passing Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-blue);"></span>
+        <span class="section-title">Passing</span>
+      </div>
+      <div class="section-body">
+        <div class="btn-grid">
+          <button class="action-btn btn-blue" onclick="recordAction('pass')" aria-label="Record successful pass">
+            <span class="action-btn-icon">✅</span>
+            <span class="action-btn-label">Successful Pass</span>
+            <span class="action-btn-count" id="cnt-pass">0</span>
+          </button>
+          <button class="action-btn btn-neutral" onclick="recordAction('passm')" aria-label="Record missed pass">
+            <span class="action-btn-icon">🚫</span>
+            <span class="action-btn-label">Missed Pass</span>
+            <span class="action-btn-count" id="cnt-passm">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Actions -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-purple);"></span>
+        <span class="section-title">Other</span>
+      </div>
+      <div class="section-body">
+        <div class="btn-grid btn-grid-3">
+          <button class="action-btn btn-purple" onclick="recordAction('intercept')" aria-label="Record intercept">
+            <span class="action-btn-icon">🖐️</span>
+            <span class="action-btn-label">Intercept</span>
+            <span class="action-btn-count" id="cnt-intercept">0</span>
+          </button>
+          <button class="action-btn btn-warning" onclick="recordAction('turnover')" aria-label="Record turnover">
+            <span class="action-btn-icon">🔄</span>
+            <span class="action-btn-label">Turnover</span>
+            <span class="action-btn-count" id="cnt-turnover">0</span>
+          </button>
+          <button class="action-btn btn-danger" onclick="recordAction('penalty')" aria-label="Record penalty">
+            <span class="action-btn-icon">⚠️</span>
+            <span class="action-btn-label">Penalty</span>
+            <span class="action-btn-count" id="cnt-penalty">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Log -->
+    <div class="section-card">
+      <div class="section-header" style="justify-content: space-between;">
+        <div style="display:flex; align-items:center; gap: var(--space-3);">
+          <span class="section-dot" style="background: var(--color-text-faint);"></span>
+          <span class="section-title">Activity Log</span>
+        </div>
+        <button class="btn-reset" onclick="clearLog()" style="font-size: var(--text-xs);">Clear Log</button>
+      </div>
+      <div class="section-body" style="padding-top: var(--space-3);">
+        <div class="log-list" id="logList">
+          <div class="log-empty" id="logEmpty">No activity yet — start recording!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Players Setup -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-text-faint);"></span>
+        <span class="section-title">Squad (Center Pass Players)</span>
+      </div>
+      <div class="section-body">
+        <div class="players-manage">
+          <div class="player-input-row">
+            <input type="text" class="player-input" id="playerInput" placeholder="Add player name…" maxlength="30"
+              onkeydown="if(event.key==='Enter') addPlayer()">
+            <button class="btn-primary" onclick="addPlayer()" style="flex: 0 0 auto; padding: var(--space-3) var(--space-5);">Add</button>
+          </div>
+          <div class="player-list-manage" id="playerListManage"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Games Overview -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--color-text-faint);"></span>
+        <span class="section-title">All Games Overview</span>
+      </div>
+      <div class="section-body">
+        <div class="games-overview" id="gamesOverview"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Center Pass Modal -->
+<div class="modal-overlay" id="cpModal" role="dialog" aria-modal="true" aria-labelledby="cpModalTitle">
+  <div class="modal">
+    <div class="modal-title">
+      <span>🏐</span>
+      <span id="cpModalTitle">Center Pass</span>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Passed to</div>
+      <div class="player-grid" id="cpPlayerGrid">
+        <div style="color: var(--color-text-faint); font-size: var(--text-sm);">No players added yet — add some in the Squad section.</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Outcome</div>
+      <div class="outcome-toggle">
+        <button class="outcome-btn success" id="cpSuccess" onclick="selectOutcome('success')">
+          <span>✅</span> Completed
+        </button>
+        <button class="outcome-btn fail" id="cpFail" onclick="selectOutcome('fail')">
+          <span>❌</span> Missed
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeCenterPassModal()">Cancel</button>
+      <button class="btn-primary" id="cpSaveBtn" onclick="saveCenterPass()" disabled>Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'netball_stats_v2';
+
+let currentGame = 1;
+let cpSelectedPlayer = null;
+let cpSelectedOutcome = null;
+
+const actionLabels = {
+  goal: { label: 'Goal Scored', icon: '🎯', color: '#3dba6f' },
+  miss: { label: 'Goal Missed', icon: '❌', color: '#e05c5c' },
+  pass: { label: 'Successful Pass', icon: '✅', color: '#4a9ed6' },
+  passm: { label: 'Missed Pass', icon: '🚫', color: '#7a8882' },
+  intercept: { label: 'Intercept', icon: '🖐️', color: '#9b72d8' },
+  turnover: { label: 'Turnover', icon: '🔄', color: '#e08c3d' },
+  penalty: { label: 'Penalty', icon: '⚠️', color: '#e05c5c' },
+  cp_success: { label: 'Center Pass ✓', icon: '🏐', color: '#3dba6f' },
+  cp_fail: { label: 'Center Pass ✗', icon: '🏐', color: '#e05c5c' },
+};
+
+function defaultGameState() {
+  return {
+    goal: 0, miss: 0, pass: 0, passm: 0,
+    intercept: 0, turnover: 0, penalty: 0,
+    cp_success: 0, cp_fail: 0,
+    log: []
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    games: { 1: defaultGameState(), 2: defaultGameState(), 3: defaultGameState(), 4: defaultGameState(), 5: defaultGameState() },
+    players: ['C', 'WA', 'WD', 'GA', 'GD', 'GS', 'GK']
+  };
+}
+
+function saveState(state) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e) {}
+}
+
+let appState = loadState();
+// Ensure all games exist
+for (let i = 1; i <= 5; i++) {
+  if (!appState.games[i]) appState.games[i] = defaultGameState();
+  if (!appState.games[i].log) appState.games[i].log = [];
+}
+if (!appState.players) appState.players = ['C', 'WA', 'WD', 'GA', 'GD', 'GS', 'GK'];
+
+// ─── Core actions ─────────────────────────────────────────────────────────────
+
+function recordAction(type) {
+  const game = appState.games[currentGame];
+  game[type] = (game[type] || 0) + 1;
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  game.log.unshift({ type, ts, label: actionLabels[type].label });
+  saveState(appState);
+  renderAll();
+  showToast(actionLabels[type].icon + ' ' + actionLabels[type].label + ' recorded');
+}
+
+function undoLast() {
+  const game = appState.games[currentGame];
+  if (!game.log.length) { showToast('Nothing to undo'); return; }
+  const last = game.log.shift();
+  game[last.type] = Math.max(0, (game[last.type] || 1) - 1);
+  saveState(appState);
+  renderAll();
+  showToast('↩ Undone: ' + last.label);
+}
+
+function confirmReset() {
+  if (confirm('Reset all stats for Game ' + currentGame + '? This cannot be undone.')) {
+    appState.games[currentGame] = defaultGameState();
+    saveState(appState);
+    renderAll();
+    showToast('Game ' + currentGame + ' reset');
+  }
+}
+
+function clearLog() {
+  appState.games[currentGame].log = [];
+  saveState(appState);
+  renderLog();
+}
+
+// ─── Center Pass Modal ────────────────────────────────────────────────────────
+
+function openCenterPassModal() {
+  cpSelectedPlayer = null;
+  cpSelectedOutcome = null;
+  document.getElementById('cpSuccess').classList.remove('selected');
+  document.getElementById('cpFail').classList.remove('selected');
+  document.getElementById('cpSaveBtn').disabled = true;
+  renderCpPlayers();
+  document.getElementById('cpModal').classList.add('open');
+}
+
+function closeCenterPassModal() {
+  document.getElementById('cpModal').classList.remove('open');
+}
+
+function renderCpPlayers() {
+  const grid = document.getElementById('cpPlayerGrid');
+  const players = appState.players;
+  if (!players.length) {
+    grid.innerHTML = '<div style="color:var(--color-text-faint);font-size:var(--text-sm);">No players added yet.</div>';
+    return;
+  }
+  grid.innerHTML = players.map(p =>
+    `<button class="player-pill${cpSelectedPlayer === p ? ' selected' : ''}" onclick="selectCpPlayer('${p.replace(/'/g, "\'")}')">${p}</button>`
+  ).join('');
+}
+
+function selectCpPlayer(name) {
+  cpSelectedPlayer = name;
+  document.querySelectorAll('.player-pill').forEach(el => {
+    el.classList.toggle('selected', el.textContent === name);
+  });
+  checkCpReady();
+}
+
+function selectOutcome(outcome) {
+  cpSelectedOutcome = outcome;
+  document.getElementById('cpSuccess').classList.toggle('selected', outcome === 'success');
+  document.getElementById('cpFail').classList.toggle('selected', outcome === 'fail');
+  checkCpReady();
+}
+
+function checkCpReady() {
+  document.getElementById('cpSaveBtn').disabled = !(cpSelectedOutcome);
+}
+
+function saveCenterPass() {
+  const type = cpSelectedOutcome === 'success' ? 'cp_success' : 'cp_fail';
+  const game = appState.games[currentGame];
+  game[type] = (game[type] || 0) + 1;
+  const playerStr = cpSelectedPlayer ? ' → ' + cpSelectedPlayer : '';
+  const label = (cpSelectedOutcome === 'success' ? 'Center Pass ✓' : 'Center Pass ✗') + playerStr;
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  game.log.unshift({ type, ts, label });
+  game.cp_log = game.cp_log || [];
+  game.cp_log.push({ player: cpSelectedPlayer, outcome: cpSelectedOutcome, ts });
+  saveState(appState);
+  closeCenterPassModal();
+  renderAll();
+  showToast(actionLabels[type].icon + ' ' + label);
+}
+
+// ─── Players ─────────────────────────────────────────────────────────────────
+
+function addPlayer() {
+  const input = document.getElementById('playerInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (appState.players.includes(name)) { showToast('Player already in squad'); return; }
+  appState.players.push(name);
+  input.value = '';
+  saveState(appState);
+  renderPlayers();
+}
+
+function removePlayer(name) {
+  appState.players = appState.players.filter(p => p !== name);
+  saveState(appState);
+  renderPlayers();
+}
+
+function renderPlayers() {
+  const list = document.getElementById('playerListManage');
+  list.innerHTML = appState.players.map(p =>
+    `<div class="player-tag">
+      <span>${p}</span>
+      <button class="player-tag-remove" onclick="removePlayer('${p.replace(/'/g, "\'")}')" aria-label="Remove ${p}">×</button>
+    </div>`
+  ).join('');
+}
+
+// ─── Rendering ───────────────────────────────────────────────────────────────
+
+function renderAll() {
+  renderScores();
+  renderCounts();
+  renderLog();
+  renderGamesOverview();
+  renderPlayers();
+}
+
+function renderScores() {
+  const g = appState.games[currentGame];
+  const goals = g.goal || 0;
+  const missed = g.miss || 0;
+  const total = goals + missed;
+  const acc = total > 0 ? Math.round((goals / total) * 100) + '%' : '—';
+  document.getElementById('scoreGoals').textContent = goals;
+  document.getElementById('scoreMissed').textContent = missed;
+  document.getElementById('scoreAccuracy').textContent = acc;
+  document.getElementById('scorePasses').textContent = g.pass || 0;
+  document.getElementById('scorePassMissed').textContent = g.passm || 0;
+}
+
+function renderCounts() {
+  const g = appState.games[currentGame];
+  const keys = ['goal', 'miss', 'pass', 'passm', 'intercept', 'turnover', 'penalty'];
+  keys.forEach(k => {
+    const el = document.getElementById('cnt-' + k);
+    if (el) el.textContent = g[k] || 0;
+  });
+  const cpTotal = (g.cp_success || 0) + (g.cp_fail || 0);
+  const cpEl = document.getElementById('cnt-cp');
+  if (cpEl) cpEl.textContent = cpTotal;
+}
+
+function renderLog() {
+  const list = document.getElementById('logList');
+  const empty = document.getElementById('logEmpty');
+  const log = appState.games[currentGame].log || [];
+  if (!log.length) {
+    list.innerHTML = '<div class="log-empty" id="logEmpty">No activity yet — start recording!</div>';
+    return;
+  }
+  list.innerHTML = log.slice(0, 50).map(entry => {
+    const info = actionLabels[entry.type] || { icon: '•', color: '#7a8882' };
+    return `<div class="log-item">
+      <div class="log-icon" style="background: ${info.color}22;">${info.icon}</div>
+      <span class="log-text">${entry.label}</span>
+      <span class="log-time">${entry.ts}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderGamesOverview() {
+  const container = document.getElementById('gamesOverview');
+  container.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const g = appState.games[i];
+    const goals = g.goal || 0;
+    const total = goals + (g.miss || 0);
+    const acc = total > 0 ? Math.round((goals / total) * 100) + '%' : '—';
+    const card = document.createElement('div');
+    card.className = 'game-card' + (i === currentGame ? ' current' : '');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', 'Switch to Game ' + i);
+    card.innerHTML = `
+      <div class="game-card-num">Game ${i}</div>
+      <div class="game-card-goals">${goals}</div>
+      <div class="game-card-accuracy">${acc} acc</div>
+    `;
+    card.onclick = () => { switchGame(i); };
+    container.appendChild(card);
+  }
+}
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+
+function switchGame(num, tabEl) {
+  currentGame = num;
+  document.querySelectorAll('.game-tab').forEach((t, i) => {
+    t.classList.toggle('active', i + 1 === num);
+    t.setAttribute('aria-selected', i + 1 === num ? 'true' : 'false');
+  });
+  renderAll();
+}
+
+// ─── Toast ───────────────────────────────────────────────────────────────────
+
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ─── Modal close on overlay click ────────────────────────────────────────────
+document.getElementById('cpModal').addEventListener('click', function(e) {
+  if (e.target === this) closeCenterPassModal();
+});
+
+// ─── Keyboard close modal ────────────────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCenterPassModal();
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+renderAll();
+</script>
+</body>
+</html>
