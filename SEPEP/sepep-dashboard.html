@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year 9 SEPEP Netball Tournament Dashboard</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root, [data-theme="light"] {
+      --color-bg: #f7f6f2;
+      --color-surface: #ffffff;
+      --color-surface-2: #f9f8f5;
+      --color-surface-offset: #f3f0ec;
+      --color-border: #e2e0db;
+      --color-divider: #dcd9d5;
+      --color-text: #28251d;
+      --color-text-muted: #7a7974;
+      --color-text-faint: #bab9b4;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-highlight: #cedcd8;
+      --color-success: #437a22;
+      --color-success-highlight: #d4dfcc;
+      --color-warning: #964219;
+      --color-warning-highlight: #ddcfc6;
+      --color-error: #a12c7b;
+      --shadow-sm: 0 1px 3px oklch(0.2 0.01 80 / 0.07);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.09);
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #171614;
+      --color-surface: #1c1b19;
+      --color-surface-2: #201f1d;
+      --color-surface-offset: #252422;
+      --color-border: #393836;
+      --color-divider: #2e2d2b;
+      --color-text: #cdccca;
+      --color-text-muted: #797876;
+      --color-text-faint: #5a5957;
+      --color-primary: #4f98a3;
+      --color-primary-hover: #227f8b;
+      --color-primary-highlight: #313b3b;
+      --color-success: #6daa45;
+      --color-success-highlight: #3a4435;
+      --color-warning: #bb653b;
+      --color-warning-highlight: #564942;
+      --color-error: #d163a7;
+      --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.22);
+      --shadow-md: 0 4px 12px oklch(0 0 0 / 0.32);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Satoshi', system-ui, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 200ms ease, color 200ms ease;
+    }
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border);
+    }
+    /* Prediction bar */
+    .pred-bar-wrap { display: flex; height: 8px; border-radius: var(--radius-full); overflow: hidden; gap: 2px; }
+    .pred-bar-a { background: var(--color-primary); transition: width 0.5s ease; border-radius: var(--radius-full) 0 0 var(--radius-full); }
+    .pred-bar-b { background: var(--color-warning); transition: width 0.5s ease; border-radius: 0 var(--radius-full) var(--radius-full) 0; }
+    /* Ladder stripes */
+    .ladder-top { background: oklch(from var(--color-success) l c h / 0.08); }
+    .ladder-mid { background: transparent; }
+    .ladder-bot { background: oklch(from var(--color-error) l c h / 0.05); }
+    /* Badge */
+    .badge-upcoming { background: oklch(from var(--color-warning) l c h / 0.12); color: var(--color-warning); }
+    .badge-done { background: oklch(from var(--color-success) l c h / 0.12); color: var(--color-success); }
+    /* Toggle */
+    #themeToggle {
+      background: var(--color-surface-offset);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: background 180ms ease;
+    }
+    #themeToggle:hover { background: var(--color-border); }
+    /* Section tabs */
+    .tab-btn { padding: 6px 16px; border-radius: var(--radius-full); font-weight: 500; font-size: 0.875rem; cursor: pointer; border: 1px solid var(--color-border); color: var(--color-text-muted); background: transparent; transition: all 180ms ease; }
+    .tab-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    /* Guide modal */
+    #guideModal { display: none; position: fixed; inset: 0; background: oklch(0 0 0 / 0.5); z-index: 50; align-items: center; justify-content: center; padding: 1rem; }
+    #guideModal.open { display: flex; }
+    .modal-inner { background: var(--color-surface); border-radius: var(--radius-xl); padding: 1.5rem; max-width: 600px; width: 100%; box-shadow: var(--shadow-md); border: 1px solid var(--color-border); max-height: 90dvh; overflow-y: auto; }
+    /* Table */
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted); letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid var(--color-divider); }
+    td { padding: 10px 12px; border-bottom: 1px solid oklch(from var(--color-divider) l c h / 0.5); font-size: 0.875rem; font-variant-numeric: tabular-nums; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    /* Fixture card */
+    .fixture-card { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1rem; background: var(--color-surface-2); }
+    .fixture-card + .fixture-card { margin-top: 0.75rem; }
+    /* Prediction chip */
+    .pred-chip { font-size: 0.7rem; font-weight: 700; padding: 2px 7px; border-radius: var(--radius-full); white-space: nowrap; }
+    .pred-chip-a { background: oklch(from var(--color-primary) l c h / 0.12); color: var(--color-primary); }
+    .pred-chip-b { background: oklch(from var(--color-warning) l c h / 0.12); color: var(--color-warning); }
+    .pred-chip-close { background: oklch(from var(--color-text-muted) l c h / 0.1); color: var(--color-text-muted); }
+    /* Winner pill in match table */
+    .winner-pill { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-full); background: oklch(from var(--color-success) l c h / 0.12); color: var(--color-success); }
+    /* Rank medal */
+    .rank-1 { color: #d4a017; font-weight: 800; }
+    .rank-2 { color: #9e9e9e; font-weight: 700; }
+    .rank-3 { color: #bf6f3c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d;
+        --color-surface-offset: #252422; --color-border: #393836; --color-divider: #2e2d2b;
+        --color-text: #cdccca; --color-text-muted: #797876; --color-text-faint: #5a5957;
+        --color-primary: #4f98a3; --color-primary-hover: #227f8b; --color-primary-highlight: #313b3b;
+        --color-success: #6daa45; --color-success-highlight: #3a4435;
+        --color-warning: #bb653b; --color-warning-highlight: #564942;
+        --color-error: #d163a7;
+        --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.22); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.32);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="max-width:1200px;margin:0 auto;padding:1.5rem 1rem 3rem;">
+    <!-- Header -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+      <div>
+        <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.15;margin-bottom:0.3rem;">Year 9 SEPEP Netball</h1>
+        <p style="color:var(--color-text-muted);font-size:0.875rem;">Tournament Dashboard · Fixtures, results &amp; automatic ladder rankings</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span id="lastUpdated" style="font-size:0.75rem;color:var(--color-text-faint);"></span>
+        <button id="themeToggle" aria-label="Toggle dark mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Ladder + Fixtures grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
+
+      <!-- Ladder -->
+      <div class="card" style="padding:1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+          <h2 style="font-size:1.1rem;font-weight:700;">Current Ladder</h2>
+          <button id="guideButton" style="background:var(--color-surface-offset);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:4px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;color:var(--color-text-muted);transition:background 180ms ease;">Ladder Guide</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="ladderTable">
+            <thead>
+              <tr>
+                <th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th>
+                <th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>%</th>
+              </tr>
+            </thead>
+            <tbody id="ladderBody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top:0.75rem;display:flex;gap:1rem;flex-wrap:wrap;">
+          <span style="font-size:0.7rem;color:var(--color-text-muted);display:flex;align-items:center;gap:4px;">
+            <span style="width:10px;height:10px;border-radius:2px;background:oklch(from var(--color-success) l c h / 0.2);display:inline-block;"></span> Top positions
+          </span>
+          <span style="font-size:0.7rem;color:var(--color-text-muted);display:flex;align-items:center;gap:4px;">
+            <span style="width:10px;height:10px;border-radius:2px;background:oklch(from var(--color-error) l c h / 0.1);display:inline-block;"></span> Lower positions
+          </span>
+        </div>
+      </div>
+
+      <!-- Upcoming Fixtures with Predictions -->
+      <div class="card" style="padding:1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <h2 style="font-size:1.1rem;font-weight:700;">Upcoming Fixtures</h2>
+          <span style="font-size:0.7rem;color:var(--color-text-faint);font-weight:500;">AI Predictions</span>
+        </div>
+        <div id="fixturesContainer"></div>
+      </div>
+    </div>
+
+    <!-- All Matches -->
+    <div class="card" style="padding:1.25rem;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">All Matches</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Court</th><th>Team A</th><th>Score</th>
+              <th>Team B</th><th>Winner</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="matchesBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guide Modal -->
+  <div id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="modal-inner">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <h2 id="guideTitle" style="font-size:1.25rem;font-weight:700;">How to Read the Ladder</h2>
+        <button id="closeGuide" style="font-size:1.4rem;color:var(--color-text-muted);cursor:pointer;line-height:1;background:none;border:none;">&times;</button>
+      </div>
+      <p style="color:var(--color-text-muted);font-size:0.875rem;margin-bottom:1rem;">Teams are ranked by competition points first. Goal difference and percentage are used as tie-breakers.</p>
+      <table>
+        <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">P</td><td>Games Played</td></tr>
+          <tr><td style="font-weight:600;">W</td><td>Wins</td></tr>
+          <tr><td style="font-weight:600;">L</td><td>Losses</td></tr>
+          <tr><td style="font-weight:600;">GF</td><td>Goals For — total goals scored</td></tr>
+          <tr><td style="font-weight:600;">GA</td><td>Goals Against — total goals conceded</td></tr>
+          <tr><td style="font-weight:600;">GD</td><td>Goal Difference — GF minus GA</td></tr>
+          <tr><td style="font-weight:600;">Pts</td><td>Competition Points (2 win, 1 draw)</td></tr>
+          <tr><td style="font-weight:600;">%</td><td>GF ÷ GA × 100</td></tr>
+        </tbody>
+      </table>
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:1rem;margin-top:1rem;">
+        <p style="font-weight:600;margin-bottom:0.5rem;font-size:0.875rem;">Predictions Guide</p>
+        <p style="font-size:0.8rem;color:var(--color-text-muted);">Win percentages are computed from each team's current win rate, goal-scoring output, and goal differential. The coloured bar shows the relative probability — teal for Team A, amber for Team B. Predictions update automatically as results are entered.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // DATA
+    // =========================================================
+
+    const teams = [
+      'Renae R-T (1)', 'The Orangutans (2)', 'El Dirito (3)',
+      'PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'
+    ];
+
+    const matches = [
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'Lighting Ducks (6)', scoreA:11, scoreB:14, umpires:['The Orangutans (2) Umpire A','El Dirito (3) Umpire A','The Wolves (5) Umpire A'] },
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'The Orangutans (2)', teamB:'The Wolves (5)', scoreA:1, scoreB:14, umpires:['Renae R-T (1) Umpire A','PNC (4) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'El Dirito (3)', teamB:'PNC (4)', scoreA:17, scoreB:9, umpires:['Renae R-T (1) Umpire B','The Orangutans (2) Umpire B','Lighting Ducks (6) Umpire B'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Wolves (5)', scoreA:5, scoreB:12, umpires:['El Dirito (3) Umpire B','PNC (4) Umpire B','The Orangutans (2) Umpire A'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 2', teamA:'Lighting Ducks (6)', teamB:'PNC (4)', scoreA:8, scoreB:9, umpires:['The Wolves (5) Umpire B','Renae R-T (1) Umpire A','El Dirito (3) Umpire A'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 3', teamA:'The Orangutans (2)', teamB:'El Dirito (3)', scoreA:3, scoreB:11, umpires:['PNC (4) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'PNC (4)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 2', teamA:'The Wolves (5)', teamB:'El Dirito (3)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire B','PNC (4) Umpire B','Lighting Ducks (6) Umpire B'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 3', teamA:'Lighting Ducks (6)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire A','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'El Dirito (3)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 2', teamA:'PNC (4)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 3', teamA:'The Wolves (5)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire B','PNC (4) Umpire B','Renae R-T (1) Umpire A'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire B','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'El Dirito (3)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Renae R-T (1) Umpire B'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'PNC (4)', teamB:'The Wolves (5)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire A','The Orangutans (2) Umpire B','El Dirito (3) Umpire B'] }
+    ];
+
+    // =========================================================
+    // LADDER CALCULATION
+    // =========================================================
+
+    function calculateLadder() {
+      const ladder = {};
+      teams.forEach(t => { ladder[t] = { team:t, played:0, wins:0, losses:0, goalsFor:0, goalsAgainst:0, goalDifference:0, points:0, percentage:0 }; });
+      matches.forEach(m => {
+        if (m.scoreA === null) return;
+        const a = ladder[m.teamA], b = ladder[m.teamB];
+        a.played++; b.played++;
+        a.goalsFor += m.scoreA; a.goalsAgainst += m.scoreB;
+        b.goalsFor += m.scoreB; b.goalsAgainst += m.scoreA;
+        if (m.scoreA > m.scoreB) { a.wins++; b.losses++; a.points += 2; }
+        else if (m.scoreB > m.scoreA) { b.wins++; a.losses++; b.points += 2; }
+        else { a.points++; b.points++; }
+      });
+      Object.values(ladder).forEach(t => {
+        t.goalDifference = t.goalsFor - t.goalsAgainst;
+        t.percentage = t.goalsAgainst > 0 ? ((t.goalsFor / t.goalsAgainst) * 100).toFixed(1) : (t.goalsFor > 0 ? '∞' : '0.0');
+      });
+      return Object.values(ladder).sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
+        return parseFloat(b.percentage) - parseFloat(a.percentage);
+      });
+    }
+
+    // =========================================================
+    // PREDICTION ENGINE
+    // =========================================================
+
+    function computeStrengths() {
+      const ladder = calculateLadder();
+      const map = {};
+      ladder.forEach(t => {
+        const wr = t.played > 0 ? t.wins / t.played : 0;
+        const pct = t.goalsAgainst > 0 ? t.goalsFor / t.goalsAgainst : (t.goalsFor > 0 ? 5 : 1);
+        map[t.team] = wr * 40 + pct * 20 + t.goalDifference * 1.5;
+      });
+      return map;
+    }
+
+    function winProb(a, b, strengths) {
+      const diff = (strengths[a] || 0) - (strengths[b] || 0);
+      const pA = 1 / (1 + Math.exp(-diff / 30));
+      return { pA: Math.round(pA * 1000) / 10, pB: Math.round((1 - pA) * 1000) / 10 };
+    }
+
+    // =========================================================
+    // RENDER LADDER
+    // =========================================================
+
+    function renderLadder() {
+      const body = document.getElementById('ladderBody');
+      body.innerHTML = '';
+      const ladder = calculateLadder();
+      const medals = ['🥇', '🥈', '🥉'];
+      ladder.forEach((t, i) => {
+        const tr = document.createElement('tr');
+        const rowClass = i < 3 ? 'ladder-top' : i > 3 ? 'ladder-bot' : 'ladder-mid';
+        tr.className = rowClass;
+        const rankDisplay = i < 3 ? `<span class="rank-${i+1}">${medals[i]}</span>` : `<span style="color:var(--color-text-muted)">${i+1}</span>`;
+        const gdColor = t.goalDifference > 0 ? 'var(--color-success)' : t.goalDifference < 0 ? 'var(--color-error)' : 'inherit';
+        tr.innerHTML = `
+          <td>${rankDisplay}</td>
+          <td style="font-weight:600;white-space:nowrap;">${t.team}</td>
+          <td>${t.played}</td>
+          <td>${t.wins}</td>
+          <td>${t.losses}</td>
+          <td>${t.goalsFor}</td>
+          <td>${t.goalsAgainst}</td>
+          <td style="color:${gdColor};font-weight:600;">${t.goalDifference > 0 ? '+' : ''}${t.goalDifference}</td>
+          <td style="font-weight:700;">${t.points}</td>
+          <td style="color:var(--color-text-muted);">${t.percentage}</td>
+        `;
+        body.appendChild(tr);
+      });
+      document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleString('en-AU', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}`;
+    }
+
+    // =========================================================
+    // RENDER FIXTURES WITH PREDICTIONS
+    // =========================================================
+
+    function renderFixtures() {
+      const container = document.getElementById('fixturesContainer');
+      container.innerHTML = '';
+      const now = new Date();
+      const strengths = computeStrengths();
+
+      const upcoming = matches
+        .filter(m => new Date(m.date) >= now && m.scoreA === null)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 6);
+
+      if (upcoming.length === 0) {
+        container.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.875rem;">No upcoming fixtures.</p>';
+        return;
+      }
+
+      upcoming.forEach(m => {
+        const { pA, pB } = winProb(m.teamA, m.teamB, strengths);
+        const winner = pA > pB ? m.teamA : m.teamB;
+        const isClose = Math.abs(pA - pB) < 15;
+        const favouredA = pA >= pB;
+        const chipClass = isClose ? 'pred-chip pred-chip-close' : (favouredA ? 'pred-chip pred-chip-a' : 'pred-chip pred-chip-b');
+        const chipText = isClose ? 'Even match' : `${winner} favoured`;
+
+        const card = document.createElement('div');
+        card.className = 'fixture-card';
+
+        const date = new Date(m.date);
+        card.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">${m.teamA} <span style="color:var(--color-text-muted);font-weight:400;">vs</span> ${m.teamB}</div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);">${m.lesson} · ${m.court} · ${date.toLocaleDateString('en-AU',{day:'2-digit',month:'short'})} ${date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+            </div>
+            <span class="${chipClass}">${chipText}</span>
+          </div>
+
+          <!-- Prediction bar -->
+          <div style="margin-bottom:0.5rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.72rem;font-weight:600;">
+              <span style="color:var(--color-primary);">${m.teamA.split(' (')[0]} ${pA}%</span>
+              <span style="color:var(--color-warning);">${pB}% ${m.teamB.split(' (')[0]}</span>
+            </div>
+            <div class="pred-bar-wrap">
+              <div class="pred-bar-a" style="width:${pA}%;"></div>
+              <div class="pred-bar-b" style="width:${pB}%;"></div>
+            </div>
+          </div>
+
+          <div style="font-size:0.7rem;color:var(--color-text-faint);">
+            <span style="font-weight:600;color:var(--color-text-muted);">Umpires:</span> ${m.umpires.join(', ')}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // =========================================================
+    // RENDER MATCH TABLE
+    // =========================================================
+
+    function renderMatches() {
+      const body = document.getElementById('matchesBody');
+      body.innerHTML = '';
+      const strengths = computeStrengths();
+
+      matches
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .forEach(m => {
+          const tr = document.createElement('tr');
+          let winner = '-', score = '—', statusHtml = '';
+
+          if (m.scoreA !== null && m.scoreB !== null) {
+            score = `${m.scoreA} – ${m.scoreB}`;
+            statusHtml = `<span class="badge-done" style="font-size:0.72rem;font-weight:600;padding:2px 9px;border-radius:9999px;">Completed</span>`;
+            winner = m.scoreA > m.scoreB ? m.teamA : m.scoreB > m.scoreA ? m.teamB : 'Draw';
+          } else {
+            const { pA, pB } = winProb(m.teamA, m.teamB, strengths);
+            const pred = pA > pB ? m.teamA : m.teamB;
+            const conf = Math.max(pA, pB);
+            statusHtml = `<span class="badge-upcoming" style="font-size:0.72rem;font-weight:600;padding:2px 9px;border-radius:9999px;">Upcoming</span>`;
+            winner = `<span style="color:var(--color-text-faint);font-size:0.75rem;">${pred.split(' (')[0]} (${conf}%)</span>`;
+          }
+
+          tr.innerHTML = `
+            <td style="white-space:nowrap;">${new Date(m.date).toLocaleDateString('en-AU',{day:'2-digit',month:'short'})}</td>
+            <td style="color:var(--color-text-muted);">${m.court}</td>
+            <td style="font-weight:500;">${m.teamA}</td>
+            <td style="font-weight:700;text-align:center;">${score}</td>
+            <td style="font-weight:500;">${m.teamB}</td>
+            <td>${winner}</td>
+            <td>${statusHtml}</td>
+          `;
+          body.appendChild(tr);
+        });
+    }
+
+    // =========================================================
+    // DARK MODE TOGGLE
+    // =========================================================
+
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      function applyTheme() {
+        root.setAttribute('data-theme', dark ? 'dark' : 'light');
+        btn.innerHTML = dark
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      applyTheme();
+      btn.addEventListener('click', () => { dark = !dark; applyTheme(); });
+    })();
+
+    // =========================================================
+    // MODAL
+    // =========================================================
+
+    document.getElementById('guideButton').addEventListener('click', () => {
+      document.getElementById('guideModal').classList.add('open');
+    });
+    document.getElementById('closeGuide').addEventListener('click', () => {
+      document.getElementById('guideModal').classList.remove('open');
+    });
+    document.getElementById('guideModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('guideModal')) document.getElementById('guideModal').classList.remove('open');
+    });
+
+    // =========================================================
+    // INIT
+    // =========================================================
+
+    renderLadder();
+    renderFixtures();
+    renderMatches();
+  </script>
+</body>
+</html>
