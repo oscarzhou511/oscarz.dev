@@ -109,8 +109,6 @@
     .pred-chip-a { background: oklch(from var(--color-primary) l c h / 0.12); color: var(--color-primary); }
     .pred-chip-b { background: oklch(from var(--color-warning) l c h / 0.12); color: var(--color-warning); }
     .pred-chip-close { background: oklch(from var(--color-text-muted) l c h / 0.1); color: var(--color-text-muted); }
-    /* Winner pill in match table */
-    .winner-pill { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-full); background: oklch(from var(--color-success) l c h / 0.12); color: var(--color-success); }
     /* Rank medal */
     .rank-1 { color: #d4a017; font-weight: 800; }
     .rank-2 { color: #9e9e9e; font-weight: 700; }
@@ -124,7 +122,6 @@
         --color-success: #6daa45; --color-success-highlight: #3a4435;
         --color-warning: #bb653b; --color-warning-highlight: #564942;
         --color-error: #d163a7;
-        --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.22); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.32);
       }
     }
   </style>
@@ -136,7 +133,7 @@
     <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
       <div>
         <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.15;margin-bottom:0.3rem;">Year 9 SEPEP Netball</h1>
-        <p style="color:var(--color-text-muted);font-size:0.875rem;">Tournament Dashboard · Fixtures, results &amp; automatic ladder rankings</p>
+        <p style="color:var(--color-text-muted);font-size:0.875rem;">Tournament Dashboard · Fixtures, results, tipping &amp; ladders</p>
       </div>
       <div style="display:flex;align-items:center;gap:0.5rem;">
         <span id="lastUpdated" style="font-size:0.75rem;color:var(--color-text-faint);"></span>
@@ -186,20 +183,45 @@
       </div>
     </div>
 
-    <!-- All Matches -->
-    <div class="card" style="padding:1.25rem;">
-      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">All Matches</h2>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th><th>Court</th><th>Team A</th><th>Score</th>
-              <th>Team B</th><th>Winner</th><th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="matchesBody"></tbody>
-        </table>
+    <!-- Tipping Ladder + Matches Grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
+      
+      <!-- Tipping Ladder -->
+      <div class="card" style="padding:1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <h2 style="font-size:1.1rem;font-weight:700;">Tipping Leaderboard</h2>
+          <span style="font-size:0.7rem;color:var(--color-text-faint);font-weight:500;">Auto-updates w/ Margin Tiebreaker</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Tipper</th>
+                <th style="text-align:right;">Score</th>
+              </tr>
+            </thead>
+            <tbody id="tippingBody"></tbody>
+          </table>
+        </div>
       </div>
+
+      <!-- All Matches -->
+      <div class="card" style="padding:1.25rem;">
+        <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">All Matches</h2>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th><th>Team A</th><th>Score</th>
+                <th>Team B</th><th>Winner</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="matchesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -224,10 +246,6 @@
           <tr><td style="font-weight:600;">%</td><td>GF ÷ GA × 100</td></tr>
         </tbody>
       </table>
-      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:1rem;margin-top:1rem;">
-        <p style="font-weight:600;margin-bottom:0.5rem;font-size:0.875rem;">Predictions Guide</p>
-        <p style="font-size:0.8rem;color:var(--color-text-muted);">Win percentages are computed from each team's current win rate, goal-scoring output, and goal differential. The coloured bar shows the relative probability — teal for Team A, amber for Team B. Predictions update automatically as results are entered.</p>
-      </div>
     </div>
   </div>
 
@@ -248,15 +266,35 @@
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Wolves (5)', scoreA:5, scoreB:12, umpires:['El Dirito (3) Umpire B','PNC (4) Umpire B','The Orangutans (2) Umpire A'] },
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 2', teamA:'Lighting Ducks (6)', teamB:'PNC (4)', scoreA:8, scoreB:9, umpires:['The Wolves (5) Umpire B','Renae R-T (1) Umpire A','El Dirito (3) Umpire A'] },
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 3', teamA:'The Orangutans (2)', teamB:'El Dirito (3)', scoreA:3, scoreB:11, umpires:['PNC (4) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
+      // Round 3 matches below (Tipping applies to these matches)
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'PNC (4)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 2', teamA:'The Wolves (5)', teamB:'El Dirito (3)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire B','PNC (4) Umpire B','Lighting Ducks (6) Umpire B'] },
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 3', teamA:'Lighting Ducks (6)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire A','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
+      
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'El Dirito (3)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 2', teamA:'PNC (4)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 3', teamA:'The Wolves (5)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire B','PNC (4) Umpire B','Renae R-T (1) Umpire A'] },
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire B','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'El Dirito (3)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Renae R-T (1) Umpire B'] },
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'PNC (4)', teamB:'The Wolves (5)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire A','The Orangutans (2) Umpire B','El Dirito (3) Umpire B'] }
+    ];
+
+    const tippingData = [
+      { name: 'Ollie Burchnall', margin: 3, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Cooper McGregor', margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Joey Burchnall', margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Sam Cantor', margin: 7, tips: ['PNC (4)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Miles Whiffen', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Arjun Betti', margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Blake Whiffen', margin: 40, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Henry Chessell', margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Freya Stinchcombe', margin: 12, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Hamish Warner', margin: 4, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Harry Fawcett', margin: 4, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Alice Astier', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Amelia Norris', margin: 6, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Olivia Watson', margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Otto Purcell', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] }
     ];
 
     // =========================================================
@@ -288,6 +326,47 @@
     }
 
     // =========================================================
+    // TIPPING CALCULATION
+    // =========================================================
+    
+    function calculateTippingLadder() {
+      // Find Round 3 Matches to compare against the tips
+      const round3Matches = matches.filter(m => m.date.startsWith('2026-05-29'));
+      
+      // Get actual margin for Court 1 Match
+      const court1Match = round3Matches.find(m => m.court === 'Court 1');
+      let actualMargin = 0;
+      let matchPlayed = false;
+      
+      if (court1Match && court1Match.scoreA !== null && court1Match.scoreB !== null) {
+        actualMargin = Math.abs(court1Match.scoreA - court1Match.scoreB);
+        matchPlayed = true;
+      }
+      
+      const leaderboard = tippingData.map(tipper => {
+        let score = 0;
+        tipper.tips.forEach(tip => {
+          const match = round3Matches.find(m => m.teamA === tip || m.teamB === tip);
+          if (match && match.scoreA !== null && match.scoreB !== null) {
+            const winner = match.scoreA > match.scoreB ? match.teamA : (match.scoreB > match.scoreA ? match.teamB : 'Draw');
+            if (winner === tip) score += 1;
+          }
+        });
+        
+        // Calculate the difference between their guess and the actual margin (only if match played)
+        const marginDiff = matchPlayed ? Math.abs(actualMargin - tipper.margin) : 0;
+        
+        return { name: tipper.name, score: score, marginDiff: marginDiff };
+      });
+
+      // Sort tippers by highest score. If tied, sort by the smallest margin difference.
+      return leaderboard.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.marginDiff - b.marginDiff;
+      });
+    }
+
+    // =========================================================
     // PREDICTION ENGINE
     // =========================================================
 
@@ -309,7 +388,7 @@
     }
 
     // =========================================================
-    // RENDER LADDER
+    // RENDER FUNCTIONS
     // =========================================================
 
     function renderLadder() {
@@ -340,9 +419,32 @@
       document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleString('en-AU', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}`;
     }
 
-    // =========================================================
-    // RENDER FIXTURES WITH PREDICTIONS
-    // =========================================================
+    function renderTippingLadder() {
+      const body = document.getElementById('tippingBody');
+      body.innerHTML = '';
+      const ladder = calculateTippingLadder();
+      const medals = ['🥇', '🥈', '🥉'];
+      
+      // Calculate ranks considering ties in both score and margin difference
+      let currentRank = 1;
+      
+      ladder.forEach((t, i) => {
+        // If it's not the first person, and their score/margin diff are worse than the person above, increase rank
+        if (i > 0 && (t.score < ladder[i-1].score || t.marginDiff > ladder[i-1].marginDiff)) {
+          currentRank = i + 1;
+        }
+        
+        const tr = document.createElement('tr');
+        const rankDisplay = currentRank <= 3 ? `<span class="rank-${currentRank}">${medals[currentRank-1]}</span>` : `<span style="color:var(--color-text-muted)">${currentRank}</span>`;
+        
+        tr.innerHTML = `
+          <td>${rankDisplay}</td>
+          <td style="font-weight:600;">${t.name}</td>
+          <td style="font-weight:700;color:var(--color-primary);text-align:right;">${t.score}</td>
+        `;
+        body.appendChild(tr);
+      });
+    }
 
     function renderFixtures() {
       const container = document.getElementById('fixturesContainer');
@@ -353,7 +455,7 @@
       const upcoming = matches
         .filter(m => new Date(m.date) >= now && m.scoreA === null)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .slice(0, 6);
+        .slice(0, 4);
 
       if (upcoming.length === 0) {
         container.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.875rem;">No upcoming fixtures.</p>';
@@ -367,16 +469,15 @@
         const favouredA = pA >= pB;
         const chipClass = isClose ? 'pred-chip pred-chip-close' : (favouredA ? 'pred-chip pred-chip-a' : 'pred-chip pred-chip-b');
         const chipText = isClose ? 'Even match' : `${winner} favoured`;
-
+        
+        const date = new Date(m.date);
         const card = document.createElement('div');
         card.className = 'fixture-card';
-
-        const date = new Date(m.date);
         card.innerHTML = `
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
             <div>
               <div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">${m.teamA} <span style="color:var(--color-text-muted);font-weight:400;">vs</span> ${m.teamB}</div>
-              <div style="font-size:0.75rem;color:var(--color-text-muted);">${m.lesson} · ${m.court} · ${date.toLocaleDateString('en-AU',{day:'2-digit',month:'short'})} ${date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);">${m.lesson} · ${m.court} · ${date.toLocaleDateString('en-AU',{day:'2-digit',month:'short'})}</div>
             </div>
             <span class="${chipClass}">${chipText}</span>
           </div>
@@ -392,18 +493,10 @@
               <div class="pred-bar-b" style="width:${pB}%;"></div>
             </div>
           </div>
-
-          <div style="font-size:0.7rem;color:var(--color-text-faint);">
-            <span style="font-weight:600;color:var(--color-text-muted);">Umpires:</span> ${m.umpires.join(', ')}
-          </div>
         `;
         container.appendChild(card);
       });
     }
-
-    // =========================================================
-    // RENDER MATCH TABLE
-    // =========================================================
 
     function renderMatches() {
       const body = document.getElementById('matchesBody');
@@ -430,7 +523,6 @@
 
           tr.innerHTML = `
             <td style="white-space:nowrap;">${new Date(m.date).toLocaleDateString('en-AU',{day:'2-digit',month:'short'})}</td>
-            <td style="color:var(--color-text-muted);">${m.court}</td>
             <td style="font-weight:500;">${m.teamA}</td>
             <td style="font-weight:700;text-align:center;">${score}</td>
             <td style="font-weight:500;">${m.teamB}</td>
@@ -481,6 +573,7 @@
     renderLadder();
     renderFixtures();
     renderMatches();
+    renderTippingLadder();
   </script>
 </body>
 </html>
