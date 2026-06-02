@@ -266,50 +266,78 @@
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Wolves (5)', scoreA:5, scoreB:12, umpires:['El Dirito (3) Umpire B','PNC (4) Umpire B','The Orangutans (2) Umpire A'] },
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 2', teamA:'Lighting Ducks (6)', teamB:'PNC (4)', scoreA:8, scoreB:9, umpires:['The Wolves (5) Umpire B','Renae R-T (1) Umpire A','El Dirito (3) Umpire A'] },
       { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 3', teamA:'The Orangutans (2)', teamB:'El Dirito (3)', scoreA:3, scoreB:11, umpires:['PNC (4) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
-      // Round 3 matches below (Tipping applies to these matches)
+      // Round 3 matches
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'PNC (4)', scoreA:11, scoreB:9, umpires:['The Orangutans (2) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 2', teamA:'The Wolves (5)', teamB:'El Dirito (3)', scoreA:8, scoreB:17, umpires:['Renae R-T (1) Umpire B','PNC (4) Umpire B','Lighting Ducks (6) Umpire B'] },
       { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 3', teamA:'Lighting Ducks (6)', teamB:'The Orangutans (2)', scoreA:15, scoreB:10, umpires:['Renae R-T (1) Umpire A','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
-      
+      // Round 4 matches
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'El Dirito (3)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 2', teamA:'PNC (4)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Renae R-T (1) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
       { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 3', teamA:'The Wolves (5)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire B','PNC (4) Umpire B','Renae R-T (1) Umpire A'] },
+      // Round 5 Matches
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Orangutans (2)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire B','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'El Dirito (3)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Renae R-T (1) Umpire B'] },
       { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'PNC (4)', teamB:'The Wolves (5)', scoreA:null, scoreB:null, umpires:['Lighting Ducks (6) Umpire A','The Orangutans (2) Umpire B','El Dirito (3) Umpire B'] }
     ];
 
     const tippingData = [
-      { name: 'Ollie Burchnall', margin: 3, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Cooper McGregor', margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Joey Burchnall', margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Sam Cantor', margin: 7, tips: ['PNC (4)', 'The Wolves (5)', 'The Orangutans (2)'] },
-      { name: 'Miles Whiffen', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Arjun Betti', margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Blake Whiffen', margin: 40, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Henry Chessell', margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
-      { name: 'Freya Stinchcombe', margin: 12, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Hamish Warner', margin: 4, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
-      { name: 'Harry Fawcett', margin: 4, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Alice Astier', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Amelia Norris', margin: 6, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
-      { name: 'Olivia Watson', margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Otto Purcell', margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Tala Santinon', margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Oscar Zhou', margin: 7, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Monty McCann', margin: 7, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Orangutans (2)'] },
-      { name: 'Keefe Wu', margin: 7, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Annie Yu', margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Arabella Hillam', margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Evie Dang', margin: 6, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
-      { name: 'Elsa Corbett', margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
-      { name: 'Yoyo Li', margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'James Zhou', margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Noah Materne', margin: 4, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
-      { name: 'Joshua Tziavrangos', margin: 4, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-      { name: 'Ruby Wei', margin: 3, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
-      { name: 'Harry Fietz', margin: 12, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
-      { name: 'Ashton Coro', margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] }
+      // --- ROUND 3 ---
+      { name: 'Ollie Burchnall', round: 3, margin: 3, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Cooper McGregor', round: 3, margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Joey Burchnall', round: 3, margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Sam Cantor', round: 3, margin: 7, tips: ['PNC (4)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Miles Whiffen', round: 3, margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Arjun Betti', round: 3, margin: 2, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Blake Whiffen', round: 3, margin: 40, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Henry Chessell', round: 3, margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Freya Stinchcombe', round: 3, margin: 12, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Hamish Warner', round: 3, margin: 4, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Harry Fawcett', round: 3, margin: 4, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Alice Astier', round: 3, margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Amelia Norris', round: 3, margin: 6, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Olivia Watson', round: 3, margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Otto Purcell', round: 3, margin: 5, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Tala Santinon', round: 3, margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Oscar Zhou', round: 3, margin: 7, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Monty McCann', round: 3, margin: 7, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Orangutans (2)'] },
+      { name: 'Keefe Wu', round: 3, margin: 7, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Annie Yu', round: 3, margin: 4, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Arabella Hillam', round: 3, margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Evie Dang', round: 3, margin: 6, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Elsa Corbett', round: 3, margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'The Orangutans (2)'] },
+      { name: 'Yoyo Li', round: 3, margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'James Zhou', round: 3, margin: 3, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Noah Materne', round: 3, margin: 4, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Joshua Tziavrangos', round: 3, margin: 4, tips: ['PNC (4)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      { name: 'Ruby Wei', round: 3, margin: 3, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Harry Fietz', round: 3, margin: 12, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
+      { name: 'Ashton Coro', round: 3, margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      // --- ROUND 4 ---
+      { name: 'Oscar Zhou', round: 4, margin: 5, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
+      { name: 'Wendy Lee', round: 4, margin: 6, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Tala Santinon', round: 4, margin: 7, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Joey Burchnall', round: 4, margin: 5, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Noah Materne', round: 4, margin: 11, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Arjun Betti', round: 4, margin: 4, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Keefe Wu', round: 4, margin: 4, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
+      { name: 'Harry Fawcett', round: 4, margin: 9, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
+      { name: 'Cooper McGregor', round: 4, margin: 5, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Ollie Burchnall', round: 4, margin: 10, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
+      { name: 'Freya Stinchcombe', round: 4, margin: 10, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Harry Fietz', round: 4, margin: 11, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
+      { name: 'Blake Whiffen', round: 4, margin: 6, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Evie Dang', round: 4, margin: 2, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
+      { name: 'Hamish Warner', round: 4, margin: 12, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Ashton Coro', round: 4, margin: 4, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
+      { name: 'Monty McCann', round: 4, margin: 7, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
+      { name: 'Samuel Tse', round: 4, margin: 2, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Arabella Hillam', round: 4, margin: 8, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Olivia Watson', round: 4, margin: 5, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
+      { name: 'Elsa Corbett', round: 4, margin: 3, tips: ['Renae R-T (1)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Sam Cantor', round: 4, margin: 9, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
+      { name: 'Annie Yu', round: 4, margin: 2, tips: ['Renae R-T (1)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Lucy Bray', round: 4, margin: 4, tips: ['Renae R-T (1)', 'PNC (4)', 'The Wolves (5)'] },
+      { name: 'Otto Purcell', round: 4, margin: 10, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] }
     ];
 
     // =========================================================
@@ -345,37 +373,38 @@
     // =========================================================
     
     function calculateTippingLadder() {
-      // Find Round 3 Matches to compare against the tips
-      const round3Matches = matches.filter(m => m.date.startsWith('2026-05-29'));
+      const userStats = {};
       
-      // Get actual margin for Court 1 Match
-      const court1Match = round3Matches.find(m => m.court === 'Court 1');
-      let actualMargin = 0;
-      let matchPlayed = false;
-      
-      if (court1Match && court1Match.scoreA !== null && court1Match.scoreB !== null) {
-        actualMargin = Math.abs(court1Match.scoreA - court1Match.scoreB);
-        matchPlayed = true;
-      }
-      
-      const leaderboard = tippingData.map(tipper => {
-        let score = 0;
-        tipper.tips.forEach(tip => {
-          const match = round3Matches.find(m => m.teamA === tip || m.teamB === tip);
+      tippingData.forEach(entry => {
+        if (!userStats[entry.name]) {
+          userStats[entry.name] = { name: entry.name, score: 0, marginDiff: 0 };
+        }
+        
+        // Define which dates belong to which round
+        const datePrefix = entry.round === 3 ? '2026-05-29' : '2026-06-02';
+        const roundMatches = matches.filter(m => m.date.startsWith(datePrefix));
+        
+        // Score Calculation
+        entry.tips.forEach(tip => {
+          const match = roundMatches.find(m => m.teamA === tip || m.teamB === tip);
           if (match && match.scoreA !== null && match.scoreB !== null) {
             const winner = match.scoreA > match.scoreB ? match.teamA : (match.scoreB > match.scoreA ? match.teamB : 'Draw');
-            if (winner === tip) score += 1;
+            if (winner === tip) {
+              userStats[entry.name].score += 1;
+            }
           }
         });
         
-        // Calculate the difference between their guess and the actual margin (only if match played)
-        const marginDiff = matchPlayed ? Math.abs(actualMargin - tipper.margin) : 0;
-        
-        return { name: tipper.name, score: score, marginDiff: marginDiff };
+        // Margin calculation tie-breaker for completed Court 1 matches
+        const court1Match = roundMatches.find(m => m.court === 'Court 1');
+        if (court1Match && court1Match.scoreA !== null && court1Match.scoreB !== null) {
+          const actualMargin = Math.abs(court1Match.scoreA - court1Match.scoreB);
+          userStats[entry.name].marginDiff += Math.abs(actualMargin - entry.margin);
+        }
       });
 
-      // Sort tippers by highest score. If tied, sort by the smallest margin difference.
-      return leaderboard.sort((a, b) => {
+      // Sort tippers by highest score. If tied, sort by the smallest accumulated margin difference.
+      return Object.values(userStats).sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
         return a.marginDiff - b.marginDiff;
       });
