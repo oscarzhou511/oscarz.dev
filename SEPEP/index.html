@@ -312,6 +312,7 @@
       { name: 'Ruby Wei', round: 3, margin: 3, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
       { name: 'Harry Fietz', round: 3, margin: 12, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
       { name: 'Ashton Coro', round: 3, margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
+      
       // --- ROUND 4 ---
       { name: 'Oscar Zhou', round: 4, margin: 5, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
       { name: 'Wendy Lee', round: 4, margin: 6, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
@@ -337,7 +338,27 @@
       { name: 'Sam Cantor', round: 4, margin: 9, tips: ['El Dirito (3)', 'The Orangutans (2)', 'The Wolves (5)'] },
       { name: 'Annie Yu', round: 4, margin: 2, tips: ['Renae R-T (1)', 'PNC (4)', 'The Wolves (5)'] },
       { name: 'Lucy Bray', round: 4, margin: 4, tips: ['Renae R-T (1)', 'PNC (4)', 'The Wolves (5)'] },
-      { name: 'Otto Purcell', round: 4, margin: 10, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] }
+      { name: 'Otto Purcell', round: 4, margin: 10, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
+
+      // --- ROUND 5 ---
+      { name: 'Blake Whiffen', round: 5, margin: 8, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Cooper McGregor', round: 5, margin: 8, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Evie Dang', round: 5, margin: 5, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Hamish Warner', round: 5, margin: 8, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Arjun Betti', round: 5, margin: 5, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Harry Fawcett', round: 5, margin: 5, tips: ['Renae R-T (1)', 'Lighting Ducks (6)', 'The Wolves (5)'] },
+      { name: 'Harry Fietz', round: 5, margin: 11, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Aidan Sharma', round: 5, margin: 4, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Olivia Watson', round: 5, margin: 1, tips: ['The Orangutans (2)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Nate Roberts-Thomson', round: 5, margin: 5, tips: ['Renae R-T (1)', 'El Dirito (3)', 'PNC (4)'] },
+      { name: 'Elsa Corbett', round: 5, margin: 2, tips: ['The Orangutans (2)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Joshua Tziavrangos', round: 5, margin: 2, tips: ['Renae R-T (1)', 'El Dirito (3)', 'PNC (4)'] },
+      { name: 'Joey Burchnall', round: 5, margin: 5, tips: ['The Orangutans (2)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Miles Whiffen', round: 5, margin: 3, tips: ['The Orangutans (2)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Freya Stinchcombe', round: 5, margin: 10, tips: ['The Orangutans (2)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Annie Yu', round: 5, margin: 3, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] },
+      { name: 'Oscar Zhou', round: 5, margin: 7, tips: ['Renae R-T (1)', 'Lighting Ducks (6)', 'The Wolves (5)'] },
+      { name: 'Arabella Hillam', round: 5, margin: 8, tips: ['Renae R-T (1)', 'El Dirito (3)', 'The Wolves (5)'] }
     ];
 
     // =========================================================
@@ -381,7 +402,11 @@
         }
         
         // Define which dates belong to which round
-        const datePrefix = entry.round === 3 ? '2026-05-29' : '2026-06-02';
+        let datePrefix = '';
+        if (entry.round === 3) datePrefix = '2026-05-29';
+        else if (entry.round === 4) datePrefix = '2026-06-02';
+        else if (entry.round === 5) datePrefix = '2026-06-04';
+        
         const roundMatches = matches.filter(m => m.date.startsWith(datePrefix));
         
         // Score Calculation
