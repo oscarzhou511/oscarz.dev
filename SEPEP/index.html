@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +7,7 @@
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root,
-    [data-theme="light"] {
+    :root, [data-theme="light"] {
       --color-bg: #f7f6f2;
       --color-surface: #ffffff;
       --color-surface-2: #f9f8f5;
@@ -33,7 +31,6 @@
       --radius-xl: 1rem;
       --radius-full: 9999px;
     }
-
     [data-theme="dark"] {
       --color-bg: #171614;
       --color-surface: #1c1b19;
@@ -55,15 +52,7 @@
       --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.22);
       --shadow-md: 0 4px 12px oklch(0 0 0 / 0.32);
     }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Satoshi', system-ui, sans-serif;
       background-color: var(--color-bg);
@@ -72,59 +61,23 @@
       -webkit-font-smoothing: antialiased;
       transition: background-color 200ms ease, color 200ms ease;
     }
-
     .card {
       background: var(--color-surface);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-md);
       border: 1px solid var(--color-border);
     }
-
     /* Prediction bar */
-    .pred-bar-wrap {
-      display: flex;
-      height: 8px;
-      border-radius: var(--radius-full);
-      overflow: hidden;
-      gap: 2px;
-    }
-
-    .pred-bar-a {
-      background: var(--color-primary);
-      transition: width 0.5s ease;
-      border-radius: var(--radius-full) 0 0 var(--radius-full);
-    }
-
-    .pred-bar-b {
-      background: var(--color-warning);
-      transition: width 0.5s ease;
-      border-radius: 0 var(--radius-full) var(--radius-full) 0;
-    }
-
+    .pred-bar-wrap { display: flex; height: 8px; border-radius: var(--radius-full); overflow: hidden; gap: 2px; }
+    .pred-bar-a { background: var(--color-primary); transition: width 0.5s ease; border-radius: var(--radius-full) 0 0 var(--radius-full); }
+    .pred-bar-b { background: var(--color-warning); transition: width 0.5s ease; border-radius: 0 var(--radius-full) var(--radius-full) 0; }
     /* Ladder stripes */
-    .ladder-top {
-      background: oklch(from var(--color-success) l c h / 0.08);
-    }
-
-    .ladder-mid {
-      background: transparent;
-    }
-
-    .ladder-bot {
-      background: oklch(from var(--color-error) l c h / 0.05);
-    }
-
+    .ladder-top { background: oklch(from var(--color-success) l c h / 0.08); }
+    .ladder-mid { background: transparent; }
+    .ladder-bot { background: oklch(from var(--color-error) l c h / 0.05); }
     /* Badge */
-    .badge-upcoming {
-      background: oklch(from var(--color-warning) l c h / 0.12);
-      color: var(--color-warning);
-    }
-
-    .badge-done {
-      background: oklch(from var(--color-success) l c h / 0.12);
-      color: var(--color-success);
-    }
-
+    .badge-upcoming { background: oklch(from var(--color-warning) l c h / 0.12); color: var(--color-warning); }
+    .badge-done { background: oklch(from var(--color-success) l c h / 0.12); color: var(--color-success); }
     /* Toggle */
     #themeToggle {
       background: var(--color-surface-offset);
@@ -135,11 +88,7 @@
       color: var(--color-text-muted);
       transition: background 180ms ease;
     }
-
-    #themeToggle:hover {
-      background: var(--color-border);
-    }
-
+    #themeToggle:hover { background: var(--color-border); }
     /* Section tabs */
     .tab-btn {
       padding: 6px 16px;
@@ -152,217 +101,89 @@
       background: transparent;
       transition: all 180ms ease;
     }
-
-    .tab-btn.active {
-      background: var(--color-primary);
-      color: #fff;
-      border-color: var(--color-primary);
-    }
-
+    .tab-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
     /* Guide modal */
     #guideModal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: oklch(0 0 0 / 0.5);
-      z-index: 50;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      display: none; position: fixed; inset: 0; background: oklch(0 0 0 / 0.5);
+      z-index: 50; align-items: center; justify-content: center; padding: 1rem;
     }
-
-    #guideModal.open {
-      display: flex;
-    }
-
+    #guideModal.open { display: flex; }
     .modal-inner {
       background: var(--color-surface);
       border-radius: var(--radius-xl);
-      padding: 1.5rem;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--color-border);
-      max-height: 90dvh;
-      overflow-y: auto;
+      padding: 1.5rem; max-width: 600px; width: 100%;
+      box-shadow: var(--shadow-md); border: 1px solid var(--color-border);
+      max-height: 90dvh; overflow-y: auto;
     }
-
     /* Table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
+    table { width: 100%; border-collapse: collapse; }
     th {
-      text-align: left;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      letter-spacing: 0.05em;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--color-divider);
+      text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
+      letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid var(--color-divider);
     }
-
     td {
-      padding: 10px 12px;
-      border-bottom: 1px solid oklch(from var(--color-divider) l c h / 0.5);
-      font-size: 0.875rem;
-      font-variant-numeric: tabular-nums;
-      vertical-align: middle;
+      padding: 10px 12px; border-bottom: 1px solid oklch(from var(--color-divider) l c h / 0.5);
+      font-size: 0.875rem; font-variant-numeric: tabular-nums; vertical-align: middle;
     }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
+    tr:last-child td { border-bottom: none; }
     /* Fixture card */
     .fixture-card {
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      padding: 1rem;
-      background: var(--color-surface-2);
+      padding: 1rem; background: var(--color-surface-2);
     }
-
-    .fixture-card+.fixture-card {
-      margin-top: 0.75rem;
-    }
-
+    .fixture-card + .fixture-card { margin-top: 0.75rem; }
     /* Prediction chip */
-    .pred-chip {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: var(--radius-full);
-      white-space: nowrap;
-    }
-
-    .pred-chip-a {
-      background: oklch(from var(--color-primary) l c h / 0.12);
-      color: var(--color-primary);
-    }
-
-    .pred-chip-b {
-      background: oklch(from var(--color-warning) l c h / 0.12);
-      color: var(--color-warning);
-    }
-
-    .pred-chip-close {
-      background: oklch(from var(--color-text-muted) l c h / 0.1);
-      color: var(--color-text-muted);
-    }
-
+    .pred-chip { font-size: 0.7rem; font-weight: 700; padding: 2px 7px; border-radius: var(--radius-full); white-space: nowrap; }
+    .pred-chip-a { background: oklch(from var(--color-primary) l c h / 0.12); color: var(--color-primary); }
+    .pred-chip-b { background: oklch(from var(--color-warning) l c h / 0.12); color: var(--color-warning); }
+    .pred-chip-close { background: oklch(from var(--color-text-muted) l c h / 0.1); color: var(--color-text-muted); }
     /* Rank medal */
-    .rank-1 {
-      color: #d4a017;
-      font-weight: 800;
-    }
-
-    .rank-2 {
-      color: #9e9e9e;
-      font-weight: 700;
-    }
-
-    .rank-3 {
-      color: #bf6f3c;
-      font-weight: 700;
-    }
-
+    .rank-1 { color: #d4a017; font-weight: 800; }
+    .rank-2 { color: #9e9e9e; font-weight: 700; }
+    .rank-3 { color: #bf6f3c; font-weight: 700; }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme]) {
-        --color-bg: #171614;
-        --color-surface: #1c1b19;
-        --color-surface-2: #201f1d;
-        --color-surface-offset: #252422;
-        --color-border: #393836;
-        --color-divider: #2e2d2b;
-        --color-text: #cdccca;
-        --color-text-muted: #797876;
-        --color-text-faint: #5a5957;
-        --color-primary: #4f98a3;
-        --color-primary-hover: #227f8b;
-        --color-primary-highlight: #313b3b;
-        --color-success: #6daa45;
-        --color-success-highlight: #3a4435;
-        --color-warning: #bb653b;
-        --color-warning-highlight: #564942;
-        --color-error: #d163a7;
+        --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d;
+        --color-surface-offset: #252422; --color-border: #393836; --color-divider: #2e2d2b;
+        --color-text: #cdccca; --color-text-muted: #797876; --color-text-faint: #5a5957;
+        --color-primary: #4f98a3; --color-primary-hover: #227f8b; --color-primary-highlight: #313b3b;
+        --color-success: #6daa45; --color-success-highlight: #3a4435; --color-warning: #bb653b;
+        --color-warning-highlight: #564942; --color-error: #d163a7;
       }
     }
   </style>
 </head>
-
 <body>
   <div style="max-width:1200px;margin:0 auto;padding:1.5rem 1rem 3rem;">
     <!-- Header -->
-    <div
-      style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
       <div>
-        <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.15;margin-bottom:0.3rem;">Year 9
-          SEPEP Netball</h1>
-        <p style="color:var(--color-text-muted);font-size:0.875rem;">Tournament Dashboard · Fixtures, results, tipping
-          &amp; ladders</p>
+        <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.15;margin-bottom:0.3rem;">Year 9 SEPEP Netball</h1>
+        <p style="color:var(--color-text-muted);font-size:0.875rem;">Tournament Dashboard · Fixtures, results, tipping &amp; ladders</p>
       </div>
       <div style="display:flex;align-items:center;gap:0.5rem;">
         <span id="lastUpdated" style="font-size:0.75rem;color:var(--color-text-faint);"></span>
         <button id="themeToggle" aria-label="Toggle dark mode">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
     </div>
 
     <!-- Finals Leaderboard & Upcoming Fixtures -->
-    <div
-      style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
       <!-- Finals Leaderboard -->
       <div class="card" style="padding:1.25rem;">
-        <div
-          style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
           <h2 style="font-size:1.1rem;font-weight:700;">Finals Leaderboard</h2>
           <span style="font-size:0.7rem;color:var(--color-text-faint);font-weight:500;">Post-Season Placements</span>
         </div>
         <div style="overflow-x:auto;">
           <table>
             <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Status</th>
-              </tr>
+              <tr><th>Rank</th><th>Team</th><th>Status</th></tr>
             </thead>
-            <tbody id="finalsLadderBody">
-              <tr class="ladder-top">
-                <td><span class="rank-1">🥇 1st</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Grand Final Winner</td>
-              </tr>
-              <tr class="ladder-top">
-                <td><span class="rank-2">🥈 2nd</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Grand Final Loser</td>
-              </tr>
-              <tr class="ladder-top">
-                <td><span class="rank-3">🥉 3rd</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Bronze Final Winner</td>
-              </tr>
-              <tr class="ladder-mid">
-                <td><span style="color:var(--color-text-muted)">4th</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Bronze Final Loser</td>
-              </tr>
-              <tr class="ladder-bot">
-                <td><span style="color:var(--color-text-muted)">5th</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Consolation Winner</td>
-              </tr>
-              <tr class="ladder-bot">
-                <td><span style="color:var(--color-text-muted)">6th</span></td>
-                <td style="font-weight:600;color:var(--color-text-muted);">TBD</td>
-                <td style="color:var(--color-text-faint);font-size:0.8rem;">Consolation Loser</td>
-              </tr>
-            </tbody>
+            <tbody id="finalsLadderBody"></tbody>
           </table>
         </div>
       </div>
@@ -378,31 +199,19 @@
     </div>
 
     <!-- Season Ladder & Tipping Leaderboard Grid -->
-    <div
-      style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:1.25rem;margin-bottom:1.25rem;">
       <!-- Current Ladder (Moved down) -->
       <div class="card" style="padding:1.25rem;">
-        <div
-          style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
           <h2 style="font-size:1.1rem;font-weight:700;">Season Ladder (Round Robin)</h2>
-          <button id="guideButton"
-            style="background:var(--color-surface-offset);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:4px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;color:var(--color-text-muted);transition:background 180ms ease;">Ladder
-            Guide</button>
+          <button id="guideButton" style="background:var(--color-surface-offset);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:4px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;color:var(--color-text-muted);transition:background 180ms ease;">Ladder Guide</button>
         </div>
         <div style="overflow-x:auto;">
           <table id="ladderTable">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Team</th>
-                <th>P</th>
-                <th>W</th>
-                <th>L</th>
-                <th>GF</th>
-                <th>GA</th>
-                <th>GD</th>
-                <th>Pts</th>
-                <th>%</th>
+                <th>#</th><th>Team</th><th>P</th><th>W</th><th>L</th>
+                <th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>%</th>
               </tr>
             </thead>
             <tbody id="ladderBody"></tbody>
@@ -414,17 +223,12 @@
       <div class="card" style="padding:1.25rem;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
           <h2 style="font-size:1.1rem;font-weight:700;">Tipping Leaderboard</h2>
-          <span style="font-size:0.7rem;color:var(--color-text-faint);font-weight:500;">Auto-updates w/ Margin
-            Tiebreaker</span>
+          <span style="font-size:0.7rem;color:var(--color-text-faint);font-weight:500;">Auto-updates w/ Margin Tiebreaker</span>
         </div>
         <div style="overflow-x:auto;">
           <table>
             <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Tipper</th>
-                <th style="text-align:right;">Score</th>
-              </tr>
+              <tr><th>Rank</th><th>Tipper</th><th style="text-align:right;">Score</th></tr>
             </thead>
             <tbody id="tippingBody"></tbody>
           </table>
@@ -439,12 +243,8 @@
         <table>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Team A</th>
-              <th style="text-align:center;">Score</th>
-              <th>Team B</th>
-              <th>Winner</th>
-              <th>Status</th>
+              <th>Date</th><th>Team A</th><th style="text-align:center;">Score</th>
+              <th>Team B</th><th>Winner</th><th>Status</th>
             </tr>
           </thead>
           <tbody id="matchesBody"></tbody>
@@ -458,51 +258,20 @@
     <div class="modal-inner">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
         <h2 id="guideTitle" style="font-size:1.25rem;font-weight:700;">How to Read the Ladder</h2>
-        <button id="closeGuide"
-          style="font-size:1.4rem;color:var(--color-text-muted);cursor:pointer;line-height:1;background:none;border:none;">&times;</button>
+        <button id="closeGuide" style="font-size:1.4rem;color:var(--color-text-muted);cursor:pointer;line-height:1;background:none;border:none;">&times;</button>
       </div>
-      <p style="color:var(--color-text-muted);font-size:0.875rem;margin-bottom:1rem;">Teams are ranked by competition
-        points first. Goal difference and percentage are used as tie-breakers.</p>
+      <p style="color:var(--color-text-muted);font-size:0.875rem;margin-bottom:1rem;">Teams are ranked by competition points first. Goal difference and percentage are used as tie-breakers.</p>
       <table>
-        <thead>
-          <tr>
-            <th>Column</th>
-            <th>Meaning</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
         <tbody>
-          <tr>
-            <td style="font-weight:600;">P</td>
-            <td>Games Played</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">W</td>
-            <td>Wins</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">L</td>
-            <td>Losses</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">GF</td>
-            <td>Goals For — total goals scored</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">GA</td>
-            <td>Goals Against — total goals conceded</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">GD</td>
-            <td>Goal Difference — GF minus GA</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Pts</td>
-            <td>Competition Points (2 win, 1 draw)</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">%</td>
-            <td>GF ÷ GA × 100</td>
-          </tr>
+          <tr><td style="font-weight:600;">P</td><td>Games Played</td></tr>
+          <tr><td style="font-weight:600;">W</td><td>Wins</td></tr>
+          <tr><td style="font-weight:600;">L</td><td>Losses</td></tr>
+          <tr><td style="font-weight:600;">GF</td><td>Goals For — total goals scored</td></tr>
+          <tr><td style="font-weight:600;">GA</td><td>Goals Against — total goals conceded</td></tr>
+          <tr><td style="font-weight:600;">GD</td><td>Goal Difference — GF minus GA</td></tr>
+          <tr><td style="font-weight:600;">Pts</td><td>Competition Points (2 win, 1 draw)</td></tr>
+          <tr><td style="font-weight:600;">%</td><td>GF ÷ GA × 100</td></tr>
         </tbody>
       </table>
     </div>
@@ -519,36 +288,36 @@
 
     const matches = [
       // Regular Season
-      { date: '2026-05-21T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 1', teamA: 'Renae R-T (1)', teamB: 'Lighting Ducks (6)', scoreA: 11, scoreB: 14, umpires: ['The Orangutans (2) Umpire A', 'El Dirito (3) Umpire A', 'The Wolves (5) Umpire A'] },
-      { date: '2026-05-21T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 2', teamA: 'The Orangutans (2)', teamB: 'The Wolves (5)', scoreA: 1, scoreB: 14, umpires: ['Renae R-T (1) Umpire A', 'PNC (4) Umpire A', 'Lighting Ducks (6) Umpire A'] },
-      { date: '2026-05-21T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 3', teamA: 'El Dirito (3)', teamB: 'PNC (4)', scoreA: 17, scoreB: 9, umpires: ['Renae R-T (1) Umpire B', 'The Orangutans (2) Umpire B', 'Lighting Ducks (6) Umpire B'] },
-      { date: '2026-05-25T09:45:00', lesson: 'Monday Lesson 2', court: 'Court 1', teamA: 'Renae R-T (1)', teamB: 'The Wolves (5)', scoreA: 5, scoreB: 12, umpires: ['El Dirito (3) Umpire B', 'PNC (4) Umpire B', 'The Orangutans (2) Umpire A'] },
-      { date: '2026-05-25T09:45:00', lesson: 'Monday Lesson 2', court: 'Court 2', teamA: 'Lighting Ducks (6)', teamB: 'PNC (4)', scoreA: 8, scoreB: 9, umpires: ['The Wolves (5) Umpire B', 'Renae R-T (1) Umpire A', 'El Dirito (3) Umpire A'] },
-      { date: '2026-05-25T09:45:00', lesson: 'Monday Lesson 2', court: 'Court 3', teamA: 'The Orangutans (2)', teamB: 'El Dirito (3)', scoreA: 3, scoreB: 11, umpires: ['PNC (4) Umpire A', 'The Wolves (5) Umpire A', 'Lighting Ducks (6) Umpire A'] },
-      { date: '2026-05-29T11:30:00', lesson: 'Friday Lesson 3', court: 'Court 1', teamA: 'Renae R-T (1)', teamB: 'PNC (4)', scoreA: 11, scoreB: 9, umpires: ['The Orangutans (2) Umpire B', 'El Dirito (3) Umpire B', 'The Wolves (5) Umpire B'] },
-      { date: '2026-05-29T11:30:00', lesson: 'Friday Lesson 3', court: 'Court 2', teamA: 'The Wolves (5)', teamB: 'El Dirito (3)', scoreA: 8, scoreB: 17, umpires: ['Renae R-T (1) Umpire B', 'PNC (4) Umpire B', 'Lighting Ducks (6) Umpire B'] },
-      { date: '2026-05-29T11:30:00', lesson: 'Friday Lesson 3', court: 'Court 3', teamA: 'Lighting Ducks (6)', teamB: 'The Orangutans (2)', scoreA: 15, scoreB: 10, umpires: ['Renae R-T (1) Umpire A', 'El Dirito (3) Umpire A', 'PNC (4) Umpire A'] },
-      { date: '2026-06-02T11:30:00', lesson: 'Tuesday Lesson 3', court: 'Court 1', teamA: 'Renae R-T (1)', teamB: 'El Dirito (3)', scoreA: 1, scoreB: 11, umpires: ['The Orangutans (2) Umpire A', 'The Wolves (5) Umpire A', 'Lighting Ducks (6) Umpire A'] },
-      { date: '2026-06-02T11:30:00', lesson: 'Tuesday Lesson 3', court: 'Court 2', teamA: 'PNC (4)', teamB: 'The Orangutans (2)', scoreA: 10, scoreB: 1, umpires: ['Renae R-T (1) Umpire B', 'El Dirito (3) Umpire B', 'The Wolves (5) Umpire B'] },
-      { date: '2026-06-02T11:30:00', lesson: 'Tuesday Lesson 3', court: 'Court 3', teamA: 'The Wolves (5)', teamB: 'Lighting Ducks (6)', scoreA: 6, scoreB: 6, umpires: ['The Orangutans (2) Umpire B', 'PNC (4) Umpire B', 'Renae R-T (1) Umpire A'] },
-      { date: '2026-06-04T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 1', teamA: 'Renae R-T (1)', teamB: 'The Orangutans (2)', scoreA: 2, scoreB: 13, umpires: ['Lighting Ducks (6) Umpire B', 'El Dirito (3) Umpire A', 'PNC (4) Umpire A'] },
-      { date: '2026-06-04T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 2', teamA: 'El Dirito (3)', teamB: 'Lighting Ducks (6)', scoreA: 8, scoreB: 9, umpires: ['The Orangutans (2) Umpire A', 'The Wolves (5) Umpire A', 'Renae R-T (1) Umpire B'] },
-      { date: '2026-06-04T12:30:00', lesson: 'Thursday Lesson 4', court: 'Court 3', teamA: 'PNC (4)', teamB: 'The Wolves (5)', scoreA: 6, scoreB: 9, umpires: ['Lighting Ducks (6) Umpire A', 'The Orangutans (2) Umpire B', 'El Dirito (3) Umpire B'] },
-
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'Lighting Ducks (6)', scoreA:11, scoreB:14, umpires:['The Orangutans (2) Umpire A','El Dirito (3) Umpire A','The Wolves (5) Umpire A'] },
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'The Orangutans (2)', teamB:'The Wolves (5)', scoreA:1, scoreB:14, umpires:['Renae R-T (1) Umpire A','PNC (4) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-05-21T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'El Dirito (3)', teamB:'PNC (4)', scoreA:17, scoreB:9, umpires:['Renae R-T (1) Umpire B','The Orangutans (2) Umpire B','Lighting Ducks (6) Umpire B'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Wolves (5)', scoreA:5, scoreB:12, umpires:['El Dirito (3) Umpire B','PNC (4) Umpire B','The Orangutans (2) Umpire A'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 2', teamA:'Lighting Ducks (6)', teamB:'PNC (4)', scoreA:8, scoreB:9, umpires:['The Wolves (5) Umpire B','Renae R-T (1) Umpire A','El Dirito (3) Umpire A'] },
+      { date:'2026-05-25T09:45:00', lesson:'Monday Lesson 2', court:'Court 3', teamA:'The Orangutans (2)', teamB:'El Dirito (3)', scoreA:3, scoreB:11, umpires:['PNC (4) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'PNC (4)', scoreA:11, scoreB:9, umpires:['The Orangutans (2) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 2', teamA:'The Wolves (5)', teamB:'El Dirito (3)', scoreA:8, scoreB:17, umpires:['Renae R-T (1) Umpire B','PNC (4) Umpire B','Lighting Ducks (6) Umpire B'] },
+      { date:'2026-05-29T11:30:00', lesson:'Friday Lesson 3', court:'Court 3', teamA:'Lighting Ducks (6)', teamB:'The Orangutans (2)', scoreA:15, scoreB:10, umpires:['Renae R-T (1) Umpire A','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 1', teamA:'Renae R-T (1)', teamB:'El Dirito (3)', scoreA:1, scoreB:11, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Lighting Ducks (6) Umpire A'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 2', teamA:'PNC (4)', teamB:'The Orangutans (2)', scoreA:10, scoreB:1, umpires:['Renae R-T (1) Umpire B','El Dirito (3) Umpire B','The Wolves (5) Umpire B'] },
+      { date:'2026-06-02T11:30:00', lesson:'Tuesday Lesson 3', court:'Court 3', teamA:'The Wolves (5)', teamB:'Lighting Ducks (6)', scoreA:6, scoreB:6, umpires:['The Orangutans (2) Umpire B','PNC (4) Umpire B','Renae R-T (1) Umpire A'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 1', teamA:'Renae R-T (1)', teamB:'The Orangutans (2)', scoreA:2, scoreB:13, umpires:['Lighting Ducks (6) Umpire B','El Dirito (3) Umpire A','PNC (4) Umpire A'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 2', teamA:'El Dirito (3)', teamB:'Lighting Ducks (6)', scoreA:8, scoreB:9, umpires:['The Orangutans (2) Umpire A','The Wolves (5) Umpire A','Renae R-T (1) Umpire B'] },
+      { date:'2026-06-04T12:30:00', lesson:'Thursday Lesson 4', court:'Court 3', teamA:'PNC (4)', teamB:'The Wolves (5)', scoreA:6, scoreB:9, umpires:['Lighting Ducks (6) Umpire A','The Orangutans (2) Umpire B','El Dirito (3) Umpire B'] },
+      
       // FINALS: Game Day 1 (Quarter-Finals)
-      { date: '2026-06-12T11:30:00', lesson: 'Game Day 1 (QF)', court: 'Court 1', teamA: 'El Dirito (3)', teamB: 'Renae R-T (1)', scoreA: 18, scoreB: 1, umpires: ['TBC'] },
-      { date: '2026-06-12T11:30:00', lesson: 'Game Day 1 (QF)', court: 'Court 2', teamA: 'The Wolves (5)', teamB: 'The Orangutans (2)', scoreA: 10, scoreB: 8, umpires: ['TBC'] },
-      { date: '2026-06-12T11:30:00', lesson: 'Game Day 1 (QF)', court: 'Court 3', teamA: 'Lighting Ducks (6)', teamB: 'PNC (4)', scoreA: 9, scoreB: 11, umpires: ['TBC'] },
-
+      { date:'2026-06-12T11:30:00', lesson:'Game Day 1 (QF)', court:'Court 1', teamA:'El Dirito (3)', teamB:'Renae R-T (1)', scoreA:18, scoreB:1, umpires:['TBC'] },
+      { date:'2026-06-12T11:30:00', lesson:'Game Day 1 (QF)', court:'Court 2', teamA:'The Wolves (5)', teamB:'The Orangutans (2)', scoreA:10, scoreB:8, umpires:['TBC'] },
+      { date:'2026-06-12T11:30:00', lesson:'Game Day 1 (QF)', court:'Court 3', teamA:'Lighting Ducks (6)', teamB:'PNC (4)', scoreA:9, scoreB:11, umpires:['TBC'] },
+      
       // FINALS: Game Day 2 (Semi-Finals & Consolation)
-      { date: '2026-06-22T09:45:00', lesson: 'Game Day 2 (SF)', court: 'Court 1', teamA: 'Highest-Ranked Winner', teamB: 'Lucky Loser', scoreA: null, scoreB: null, umpires: ['TBC'] },
-      { date: '2026-06-22T09:45:00', lesson: 'Game Day 2 (SF)', court: 'Court 2', teamA: '2nd Highest Winner', teamB: '3rd Highest Winner', scoreA: null, scoreB: null, umpires: ['TBC'] },
-      { date: '2026-06-22T09:45:00', lesson: 'Game Day 2 (Cons)', court: 'Court 3', teamA: 'Consolation Team A', teamB: 'Consolation Team B', scoreA: null, scoreB: null, umpires: ['TBC'] },
+      { date:'2026-06-22T09:45:00', lesson:'Game Day 2 (SF)', court:'Court 1', teamA:'El Dirito (3)', teamB:'Lighting Ducks (6)', scoreA:null, scoreB:null, umpires:['TBC'] },
+      { date:'2026-06-22T09:45:00', lesson:'Game Day 2 (SF)', court:'Court 2', teamA:'The Wolves (5)', teamB:'PNC (4)', scoreA:null, scoreB:null, umpires:['TBC'] },
+      { date:'2026-06-22T09:45:00', lesson:'Game Day 2 (Cons)', court:'Court 3', teamA:'The Orangutans (2)', teamB:'Renae R-T (1)', scoreA:null, scoreB:null, umpires:['TBC'] },
 
       // FINALS: Game Day 3 (The Finals)
-      { date: '2026-06-23T11:30:00', lesson: 'Game Day 3 (Finals)', court: 'Court 1', teamA: 'Winner Semi 1', teamB: 'Winner Semi 2', scoreA: null, scoreB: null, umpires: ['TBC'] },
-      { date: '2026-06-23T11:30:00', lesson: 'Game Day 3 (Bronze)', court: 'Court 2', teamA: 'Loser Semi 1', teamB: 'Loser Semi 2', scoreA: null, scoreB: null, umpires: ['TBC'] },
-      { date: '2026-06-23T11:30:00', lesson: 'Game Day 3 (5th/6th)', court: 'Court 3', teamA: 'Consolation Team A', teamB: 'Consolation Team B', scoreA: null, scoreB: null, umpires: ['TBC'] }
+      { date:'2026-06-23T11:30:00', lesson:'Game Day 3 (Finals)', court:'Court 1', teamA:'SF1 Winner', teamB:'SF2 Winner', scoreA:null, scoreB:null, umpires:['TBC'] },
+      { date:'2026-06-23T11:30:00', lesson:'Game Day 3 (Bronze)', court:'Court 2', teamA:'SF1 Loser', teamB:'SF2 Loser', scoreA:null, scoreB:null, umpires:['TBC'] },
+      { date:'2026-06-23T11:30:00', lesson:'Game Day 3 (5th/6th)', court:'Court 3', teamA:'The Orangutans (2)', teamB:'Renae R-T (1)', scoreA:null, scoreB:null, umpires:['TBC'] }
     ];
 
     const tippingData = [
@@ -583,7 +352,7 @@
       { name: 'Ruby Wei', round: 3, margin: 3, tips: ['PNC (4)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
       { name: 'Harry Fietz', round: 3, margin: 12, tips: ['Renae R-T (1)', 'El Dirito (3)', 'Lighting Ducks (6)'] },
       { name: 'Ashton Coro', round: 3, margin: 5, tips: ['Renae R-T (1)', 'The Wolves (5)', 'Lighting Ducks (6)'] },
-
+      
       // --- ROUND 4 ---
       { name: 'Oscar Zhou', round: 4, margin: 5, tips: ['El Dirito (3)', 'PNC (4)', 'Lighting Ducks (6)'] },
       { name: 'Wendy Lee', round: 4, margin: 6, tips: ['El Dirito (3)', 'PNC (4)', 'The Wolves (5)'] },
@@ -664,7 +433,7 @@
     function calculateLadder() {
       const ladder = {};
       teams.forEach(t => {
-        ladder[t] = { team: t, played: 0, wins: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, points: 0, percentage: 0 };
+        ladder[t] = { team:t, played:0, wins:0, losses:0, goalsFor:0, goalsAgainst:0, goalDifference:0, points:0, percentage:0 };
       });
 
       matches.forEach(m => {
@@ -698,18 +467,21 @@
       tippingData.forEach(entry => {
         if (!userStats[entry.name]) { userStats[entry.name] = { name: entry.name, score: 0, marginDiff: 0 }; }
         let datePrefix = '';
-        if (entry.round === 3) datePrefix = '2026-05-29';
-        else if (entry.round === 4) datePrefix = '2026-06-02';
-        else if (entry.round === 5) datePrefix = '2026-06-04';
-
+        let isPostSeason = false;
+        if (entry.round === 3)        datePrefix = '2026-05-29';
+        else if (entry.round === 4)   datePrefix = '2026-06-02';
+        else if (entry.round === 5)   datePrefix = '2026-06-04';
+        else if (entry.round === 'post-1') { datePrefix = '2026-06-12'; isPostSeason = true; }
+        else if (entry.round === 'post-2') { datePrefix = '2026-06-22'; isPostSeason = true; }
+        else if (entry.round === 'post-3') { datePrefix = '2026-06-23'; isPostSeason = true; }
+        if (!datePrefix) return;
+        const pointsPerCorrect = isPostSeason ? 2 : 1;
         const roundMatches = matches.filter(m => m.date.startsWith(datePrefix));
         entry.tips.forEach(tip => {
           const match = roundMatches.find(m => m.teamA === tip || m.teamB === tip);
           if (match && match.scoreA !== null && match.scoreB !== null) {
             const winner = match.scoreA > match.scoreB ? match.teamA : (match.scoreB > match.scoreA ? match.teamB : 'Draw');
-            if (winner === tip) {
-              userStats[entry.name].score += isPostSeason ? 2 : 1;
-            }
+            if (winner === tip) userStats[entry.name].score += pointsPerCorrect;
           }
         });
         const court1Match = roundMatches.find(m => m.court === 'Court 1');
@@ -718,7 +490,6 @@
           userStats[entry.name].marginDiff += Math.abs(actualMargin - entry.margin);
         }
       });
-
       return Object.values(userStats).sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
         return a.marginDiff - b.marginDiff;
@@ -749,6 +520,103 @@
     }
 
     // =========================================================
+    // FINALS LEADERBOARD (auto-updating)
+    // =========================================================
+    function getMatchResult(datePrefix, courtName) {
+      const m = matches.find(x => x.date.startsWith(datePrefix) && x.court === courtName);
+      if (!m || m.scoreA === null || m.scoreB === null) return { winner: null, loser: null };
+      if (m.scoreA > m.scoreB) return { winner: m.teamA, loser: m.teamB };
+      if (m.scoreB > m.scoreA) return { winner: m.teamB, loser: m.teamA };
+      return { winner: null, loser: null };
+    }
+
+    function renderFinalsLadder() {
+      const body = document.getElementById('finalsLadderBody');
+      body.innerHTML = '';
+
+      // QF results (Game Day 1 — 2026-06-12)
+      const qf1 = getMatchResult('2026-06-12', 'Court 1'); // El Dirito vs Renae R-T
+      const qf2 = getMatchResult('2026-06-12', 'Court 2'); // Wolves vs Orangutans
+      const qf3 = getMatchResult('2026-06-12', 'Court 3'); // Lighting Ducks vs PNC
+
+      // Determine lucky loser (highest regular-season ranked loser)
+      const regularLadder = calculateLadder();
+      const rankMap = {};
+      regularLadder.forEach((t, i) => { rankMap[t.team] = i; });
+      const allLosers = [qf1.loser, qf2.loser, qf3.loser].filter(Boolean);
+      allLosers.sort((a, b) => (rankMap[a] ?? 99) - (rankMap[b] ?? 99));
+      const luckyLoser = allLosers[0] || null;
+      const consolationPair = allLosers.slice(1);
+
+      const qfWinners = [qf1.winner, qf2.winner, qf3.winner].filter(Boolean);
+      // Sort QF winners by regular-season rank for seeding
+      const qfWinnersSorted = [...qfWinners].sort((a, b) => (rankMap[a] ?? 99) - (rankMap[b] ?? 99));
+
+      // SF results (Game Day 2 — 2026-06-22)
+      const sf1 = getMatchResult('2026-06-22', 'Court 1'); // SF1
+      const sf2 = getMatchResult('2026-06-22', 'Court 2'); // SF2
+      const cons1 = getMatchResult('2026-06-22', 'Court 3'); // Consolation leg 1
+
+      // Finals results (Game Day 3 — 2026-06-23)
+      const gf   = getMatchResult('2026-06-23', 'Court 1'); // Grand Final
+      const bf   = getMatchResult('2026-06-23', 'Court 2'); // Bronze Final
+      const cons2 = getMatchResult('2026-06-23', 'Court 3'); // 5th/6th
+
+      // Helper: derive pending label from known teams or fallback
+      const sfTeam1 = qfWinnersSorted[0] || 'Winner QF1';
+      const sfTeam2 = luckyLoser || 'Lucky Loser';
+      const sfTeam3 = qfWinnersSorted[1] || 'Winner QF2';
+      const sfTeam4 = qfWinnersSorted[2] || 'Winner QF3';
+      const gfTeamA = sf1.winner || (qfWinners.length === 3 ? `${sfTeam1} vs ${sfTeam2}` : 'TBD');
+      const gfTeamB = sf2.winner || (qfWinners.length === 3 ? `${sfTeam3} vs ${sfTeam4}` : 'TBD');
+      const bfTeamA = sf1.loser  || (qfWinners.length === 3 ? `${sfTeam1} vs ${sfTeam2}` : 'TBD');
+      const bfTeamB = sf2.loser  || (qfWinners.length === 3 ? `${sfTeam3} vs ${sfTeam4}` : 'TBD');
+
+      const rows = [
+        { rank: 1, rowClass: 'ladder-top', rankClass: 'rank-1', emoji: '🥇',
+          team: gf.winner,
+          status: gf.winner ? 'Grand Final Winner ✅'
+                : (sf1.winner && sf2.winner ? `${sf1.winner} vs ${sf2.winner} — Grand Final` : `${gfTeamA} vs ${gfTeamB} — Grand Final`) },
+        { rank: 2, rowClass: 'ladder-top', rankClass: 'rank-2', emoji: '🥈',
+          team: gf.loser,
+          status: gf.loser ? 'Grand Final Runner-Up'
+                : (sf1.winner && sf2.winner ? `${sf1.winner} vs ${sf2.winner} — Grand Final` : `${gfTeamA} vs ${gfTeamB} — Grand Final`) },
+        { rank: 3, rowClass: 'ladder-top', rankClass: 'rank-3', emoji: '🥉',
+          team: bf.winner,
+          status: bf.winner ? 'Bronze Final Winner ✅'
+                : (sf1.loser && sf2.loser ? `${sf1.loser} vs ${sf2.loser} — Bronze Final` : `${bfTeamA} vs ${bfTeamB} — Bronze Final`) },
+        { rank: 4, rowClass: 'ladder-mid', rankClass: '',
+          team: bf.loser,
+          status: bf.loser ? 'Bronze Final Loser'
+                : (sf1.loser && sf2.loser ? `${sf1.loser} vs ${sf2.loser} — Bronze Final` : `${bfTeamA} vs ${bfTeamB} — Bronze Final`) },
+        { rank: 5, rowClass: 'ladder-bot', rankClass: '',
+          team: cons2.winner,
+          status: cons2.winner ? '5th Place ✅'
+                : (cons1.winner ? `${cons1.winner} vs ${cons1.loser || '?'} — 5th/6th Final`
+                : (consolationPair.length >= 2 ? `${consolationPair[0]} vs ${consolationPair[1]} — Consolation` : 'QF Pending')) },
+        { rank: 6, rowClass: 'ladder-bot', rankClass: '',
+          team: cons2.loser,
+          status: cons2.loser ? '6th Place'
+                : (cons1.loser ? `${cons1.winner || '?'} vs ${cons1.loser} — 5th/6th Final`
+                : (consolationPair.length >= 2 ? `${consolationPair[0]} vs ${consolationPair[1]} — Consolation` : 'QF Pending')) }
+      ];
+
+      const ords = ['st','nd','rd','th','th','th'];
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = row.rowClass;
+        const rankLabel = row.emoji
+          ? `<span class="${row.rankClass}">${row.emoji} ${row.rank}${ords[row.rank-1]}</span>`
+          : `<span style="color:var(--color-text-muted)">${row.rank}${ords[row.rank-1]}</span>`;
+        const teamDisplay = row.team
+          ? `<span style="font-weight:700;color:var(--color-text);">${row.team}</span>`
+          : `<span style="font-weight:600;color:var(--color-text-muted);">TBD</span>`;
+        tr.innerHTML = `<td>${rankLabel}</td><td>${teamDisplay}</td><td style="color:var(--color-text-faint);font-size:0.8rem;">${row.status}</td>`;
+        body.appendChild(tr);
+      });
+    }
+
+    // =========================================================
     // RENDER FUNCTIONS
     // =========================================================
     function renderLadder() {
@@ -756,14 +624,14 @@
       body.innerHTML = '';
       const ladder = calculateLadder();
       const medals = ['🥇', '🥈', '🥉'];
-
+      
       ladder.forEach((t, i) => {
         const tr = document.createElement('tr');
         const rowClass = i < 3 ? 'ladder-top' : i > 3 ? 'ladder-bot' : 'ladder-mid';
         tr.className = rowClass;
-        const rankDisplay = i < 3 ? `<span class="rank-${i + 1}">${medals[i]}</span>` : `<span style="color:var(--color-text-muted)">${i + 1}</span>`;
+        const rankDisplay = i < 3 ? `<span class="rank-${i+1}">${medals[i]}</span>` : `<span style="color:var(--color-text-muted)">${i+1}</span>`;
         const gdColor = t.goalDifference > 0 ? 'var(--color-success)' : t.goalDifference < 0 ? 'var(--color-error)' : 'inherit';
-
+        
         tr.innerHTML = `
           <td>${rankDisplay}</td>
           <td style="font-weight:600;white-space:nowrap;">${t.team}</td>
@@ -775,7 +643,7 @@
         `;
         body.appendChild(tr);
       });
-      document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleString('en-AU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+      document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleString('en-AU', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}`;
     }
 
     function renderTippingLadder() {
@@ -784,13 +652,13 @@
       const ladder = calculateTippingLadder();
       const medals = ['🥇', '🥈', '🥉'];
       let currentRank = 1;
-
+      
       ladder.forEach((t, i) => {
-        if (i > 0 && (t.score < ladder[i - 1].score || t.marginDiff > ladder[i - 1].marginDiff)) {
+        if (i > 0 && (t.score < ladder[i-1].score || t.marginDiff > ladder[i-1].marginDiff)) {
           currentRank = i + 1;
         }
         const tr = document.createElement('tr');
-        const rankDisplay = currentRank <= 3 ? `<span class="rank-${currentRank}">${medals[currentRank - 1]}</span>` : `<span style="color:var(--color-text-muted)">${currentRank}</span>`;
+        const rankDisplay = currentRank <= 3 ? `<span class="rank-${currentRank}">${medals[currentRank-1]}</span>` : `<span style="color:var(--color-text-muted)">${currentRank}</span>`;
         tr.innerHTML = `
           <td>${rankDisplay}</td>
           <td style="font-weight:600;">${t.name}</td>
@@ -809,12 +677,12 @@
         .filter(m => new Date(m.date) >= now && m.scoreA === null)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
         .slice(0, 4);
-
+        
       if (upcoming.length === 0) {
         container.innerHTML = '<p style="color:var(--color-text-muted);font-size:0.875rem;">No upcoming fixtures.</p>';
         return;
       }
-
+      
       upcoming.forEach(m => {
         const { pA, pB } = winProb(m.teamA, m.teamB, strengths);
         const winner = pA > pB ? m.teamA : m.teamB;
@@ -825,16 +693,16 @@
         const date = new Date(m.date);
         const card = document.createElement('div');
         card.className = 'fixture-card';
-
+        
         // Handling for generic UI formatting (removing bracket numbers for predictions if available)
         const teamAName = m.teamA.includes('(') ? m.teamA.split(' (')[0] : m.teamA;
         const teamBName = m.teamB.includes('(') ? m.teamB.split(' (')[0] : m.teamB;
-
+        
         card.innerHTML = `
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem;">
             <div>
               <div style="font-weight:700;font-size:0.9rem;margin-bottom:2px;">${m.teamA} <span style="color:var(--color-text-muted);font-weight:400;">vs</span> ${m.teamB}</div>
-              <div style="font-size:0.75rem;color:var(--color-text-muted);">${m.lesson} · ${m.court} · ${date.toLocaleDateString('en-AU', { day: '2-digit', month: 'short' })}</div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);">${m.lesson} · ${m.court} · ${date.toLocaleDateString('en-AU',{day:'2-digit',month:'short'})}</div>
             </div>
             <span class="${chipClass}">${chipText}</span>
           </div>
@@ -857,13 +725,13 @@
       const body = document.getElementById('matchesBody');
       body.innerHTML = '';
       const strengths = computeStrengths();
-
+      
       matches
         .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort descending to see recent/upcoming first
         .forEach(m => {
           const tr = document.createElement('tr');
           let winner = '-', score = '—', statusHtml = '';
-
+          
           if (m.scoreA !== null && m.scoreB !== null) {
             score = `${m.scoreA} – ${m.scoreB}`;
             statusHtml = `<span class="badge-done" style="font-size:0.72rem;font-weight:600;padding:2px 9px;border-radius:9999px;">Completed</span>`;
@@ -873,17 +741,17 @@
             const pred = pA > pB ? m.teamA : m.teamB;
             const conf = Math.max(pA, pB);
             statusHtml = `<span class="badge-upcoming" style="font-size:0.72rem;font-weight:600;padding:2px 9px;border-radius:9999px;">Upcoming</span>`;
-
+            
             // Format prediction for TBD cases nicely
             if (!teams.includes(m.teamA) || !teams.includes(m.teamB)) {
-              winner = `<span style="color:var(--color-text-faint);font-size:0.75rem;">TBD</span>`;
+               winner = `<span style="color:var(--color-text-faint);font-size:0.75rem;">TBD</span>`;
             } else {
-              winner = `<span style="color:var(--color-text-faint);font-size:0.75rem;">${pred.split(' (')[0]} (${conf}%)</span>`;
+               winner = `<span style="color:var(--color-text-faint);font-size:0.75rem;">${pred.split(' (')[0]} (${conf}%)</span>`;
             }
           }
-
+          
           tr.innerHTML = `
-            <td style="white-space:nowrap;">${new Date(m.date).toLocaleDateString('en-AU', { day: '2-digit', month: 'short' })}</td>
+            <td style="white-space:nowrap;">${new Date(m.date).toLocaleDateString('en-AU',{day:'2-digit',month:'short'})}</td>
             <td style="font-weight:500;">${m.teamA}</td>
             <td style="font-weight:700;text-align:center;">${score}</td>
             <td style="font-weight:500;">${m.teamB}</td>
@@ -891,13 +759,13 @@
             <td>${statusHtml}</td>
           `;
           body.appendChild(tr);
-        });
+      });
     }
 
     // =========================================================
     // DARK MODE TOGGLE & MODAL
     // =========================================================
-    (function () {
+    (function(){
       const root = document.documentElement;
       const btn = document.getElementById('themeToggle');
       let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -916,11 +784,11 @@
     // =========================================================
     // INIT
     // =========================================================
+    renderFinalsLadder();
     renderLadder();
     renderFixtures();
     renderMatches();
     renderTippingLadder();
   </script>
 </body>
-
 </html>
