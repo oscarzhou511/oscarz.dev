@@ -505,7 +505,7 @@
         else if (entry.round === 5)   datePrefix = '2026-06-04';
         else if (entry.round === 'post-1') { datePrefix = '2026-06-12'; isPostSeason = true; }
         else if (entry.round === 'post-2') { datePrefix = '2026-06-22'; isPostSeason = true; }
-        else if (entry.round === 'post-3') { datePrefix = '2026-06-23'; isPostSeason = true; }
+        else if (entry.round === 'post-3') { datePrefix = '2026-06-24'; isPostSeason = true; }
         if (!datePrefix) return;
         const pointsPerCorrect = isPostSeason ? 2 : 1;
         const roundMatches = matches.filter(m => m.date.startsWith(datePrefix));
@@ -590,9 +590,9 @@
       const cons1 = getMatchResult('2026-06-22', 'Court 3'); // Consolation leg 1
 
       // Finals results (Game Day 3 — 2026-06-23)
-      const gf   = getMatchResult('2026-06-23', 'Court 1'); // Grand Final
-      const bf   = getMatchResult('2026-06-23', 'Court 2'); // Bronze Final
-      const cons2 = getMatchResult('2026-06-23', 'Court 3'); // 5th/6th
+      const gf   = getMatchResult('2026-06-24', 'Court 1'); // Grand Final
+      const bf   = getMatchResult('2026-06-24', 'Court 2'); // Bronze Final
+      const cons2 = getMatchResult('2026-06-24', 'Court 3'); // 5th/6th
 
       // Helper: derive pending label from known teams or fallback
       const sfTeam1 = qfWinnersSorted[0] || 'Winner QF1';
