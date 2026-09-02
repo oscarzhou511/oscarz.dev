@@ -115,15 +115,23 @@
         }
 
         function parsePriceTokens(tokens) {
-            return tokens.map(t => t.replace(/[,*]/g,'').trim()).filter(t => t && t !== 'N/A');
+            return tokens.filter(t => t.trim().length > 0).map(t => {
+                const val = t.replace(/[,*]/g,'').trim();
+                return (val && val !== 'N/A') ? Number(val) : NaN;
+            });
         }
 
         function extractRowsFromText(text) {
-            const lines = text.replace(/\s+/g, ' ').split('\n').map(l => l.trim()).filter(Boolean);
+            const normalizedText = text.replace(/\s+/g, ' ');
+            const regex = /(NSW|QLD|VIC|TAS|SA|NT|WA)\s+([A-Za-z\s\-\*]+?)\s+((?:(?:N\/A|\d+(?:\.\d+)?)(?:\s+|$)){10})/g;
             const rows = [];
-            for (const line of lines) {
-                const m = line.match(/^(NSW|QLD|VIC|TAS|SA|NT|WA)\s+(.+?)\s+((?:N\/A|\d+(?:\.\d+)?)(?:\s+(?:N\/A|\d+(?:\.\d+)?)){9})$/);
-                if (m) rows.push({ state: m[1], location: m[2].replace(/\s*\*+$/,'').trim(), prices: parsePriceTokens(m[3].split(/\s+/)) });
+            let match;
+            while ((match = regex.exec(normalizedText)) !== null) {
+                rows.push({
+                    state: match[1],
+                    location: match[2].replace(/\s*\*+$/,'').trim(),
+                    prices: parsePriceTokens(match[3].split(/\s+/))
+                });
             }
             return rows;
         }
@@ -132,7 +140,7 @@
             try {
                 const resp = await fetch(TGP_URL);
                 const buf = await resp.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({  buf }).promise;
+                const pdf = await pdfjsLib.getDocument({  data: buf }).promise;
                 const page = await pdf.getPage(1);
                 const content = await page.getTextContent();
                 const text = content.items.map(i => i.str).join(' ');
